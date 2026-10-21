@@ -1,0 +1,1132 @@
+/* ==========================================================================
+   《隔代夺蛋：2026》多巴胺波普漫画风 (Dopamine Pop-Art & Neo-Brutalism) 样式表
+   ========================================================================== */
+
+:root {
+  --ink-black: #111111;
+  --market-red: #FF2A54;
+  --market-yellow: #FFBE0B;
+  --market-orange: #FF9F1C;
+  --market-green: #06D6A0;
+  --market-cream: #FFF8E7;
+  --cyber-pink: #FF007F;
+  --cyber-lime: #CCFF00;
+  --cyber-cyan: #00F0FF;
+  --cyber-purple: #1D0B38;
+  --border-thick: 4px solid #111111;
+  --shadow-brutal: 5px 5px 0px #111111;
+  --shadow-brutal-sm: 3px 3px 0px #111111;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #0B0716;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(255, 42, 84, 0.18), transparent 45%),
+    radial-gradient(circle at 80% 50%, rgba(0, 240, 255, 0.18), transparent 45%),
+    radial-gradient(#241734 1.5px, transparent 1.5px);
+  background-size: 100% 100%, 100% 100%, 24px 24px;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Impact", "Arial Black", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#app-shell {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+/* 16:9 响应式街机画框 */
+#game-container {
+  position: relative;
+  width: min(1280px, 98vw, calc(96vh * (16 / 9)));
+  aspect-ratio: 16 / 9;
+  background: #111;
+  border: 5px solid #111;
+  border-radius: 16px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.75), 0 0 0 3px #FFBE0B;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: filter 0.12s ease, box-shadow 0.2s ease;
+}
+
+/* 多巴胺狂热暴走状态外框特效 */
+#game-container.fever-overdrive {
+  box-shadow: 0 0 35px #FF007F, 0 0 60px #00F0FF, 0 0 0 5px #CCFF00;
+}
+
+/* 多巴胺戒断：踩雷瞬间 0.35s 抽色黑白反差滤镜 */
+#game-container.withdraw-shock {
+  filter: grayscale(100%) contrast(165%) brightness(0.9);
+}
+
+/* ==========================================================================
+   顶部街机 HUD 状态栏 (1:1 复刻概念设计图)
+   ========================================================================== */
+#arcade-hud {
+  position: relative;
+  width: 100%;
+  height: 19.5%;
+  min-height: 106px;
+  max-height: 138px;
+  background: #111;
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-bottom: 4px solid #111;
+}
+
+/* 黑黄警示斜纹条 */
+.hazard-strip {
+  width: 100%;
+  height: 11px;
+  background: repeating-linear-gradient(
+    -55deg,
+    #111111 0px,
+    #111111 16px,
+    #FFBE0B 16px,
+    #FFBE0B 32px
+  );
+  border-bottom: 2px solid #111;
+  flex-shrink: 0;
+}
+
+.hazard-strip.bottom-strip {
+  border-top: 2px solid #111;
+  border-bottom: none;
+}
+
+.hud-main-row {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1.35fr 1fr;
+  align-items: center;
+  position: relative;
+  background: linear-gradient(90deg, #FF9F1C 0%, #FFBF46 32%, #121324 32.1%, #121324 67.9%, #FFBF46 68%, #FF9F1C 100%);
+}
+
+/* 左右两侧橙黄漫画网点区 */
+.hud-side {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  position: relative;
+  background-color: #FFAE2B;
+  background-image: radial-gradient(rgba(230, 57, 70, 0.28) 1.5px, transparent 1.5px);
+  background-size: 8px 8px;
+}
+
+.hud-left {
+  clip-path: polygon(0 0, 92% 0, 100% 100%, 0 100%);
+  padding-right: 34px;
+  gap: 12px;
+}
+
+.hud-right {
+  clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
+  padding-left: 34px;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* 角色头像框 */
+.avatar-box {
+  width: 66px;
+  height: 66px;
+  border-radius: 14px;
+  border: 4px solid #111;
+  box-shadow: 3px 3px 0 #111;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #fff;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.avatar-box.grandma-avatar {
+  background: #FF5C77;
+  box-shadow: 0 0 0 2px #FF2A54, 4px 4px 0 #111;
+}
+
+.avatar-box.grandson-avatar {
+  background: #00BBF9;
+  box-shadow: 0 0 0 2px #00F0FF, 4px 4px 0 #111;
+}
+
+.avatar-box.pop-bounce {
+  transform: scale(1.18) rotate(-6deg);
+}
+
+.avatar-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 分数面板 */
+.score-block {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.score-label {
+  font-size: clamp(13px, 1.3vw, 17px);
+  font-weight: 900;
+  font-style: italic;
+  color: #FFF;
+  -webkit-text-stroke: 1.5px #111;
+  text-shadow: 2px 2px 0 #111;
+  letter-spacing: 0.5px;
+}
+
+.score-value {
+  font-size: clamp(24px, 2.7vw, 38px);
+  font-weight: 900;
+  font-style: italic;
+  color: #FFFFFF;
+  -webkit-text-stroke: 2px #111;
+  text-shadow: 3px 3px 0 #111;
+  letter-spacing: 1px;
+  transition: transform 0.1s ease;
+}
+
+.score-value.score-pop {
+  transform: scale(1.22);
+  color: #CCFF00;
+}
+
+/* COMBO 漫画爆炸星标 (跨出底栏边缘) */
+.combo-burst {
+  position: absolute;
+  left: 52px;
+  bottom: -36px;
+  width: 122px;
+  height: 78px;
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-8deg);
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.combo-burst.combo-pop {
+  transform: rotate(-12deg) scale(1.25);
+}
+
+.burst-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(3px 3px 0 #111);
+}
+
+.combo-text {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 0.95;
+  transform: rotate(-3deg);
+}
+
+.combo-text span {
+  font-size: 13px;
+  font-weight: 900;
+  font-style: italic;
+  color: #FFBE0B;
+  -webkit-text-stroke: 1.3px #111;
+  text-shadow: 1.5px 1.5px 0 #111;
+}
+
+.combo-text strong {
+  font-size: 23px;
+  font-weight: 900;
+  font-style: italic;
+  color: #FF2A54;
+  -webkit-text-stroke: 1.5px #111;
+  text-shadow: 2px 2px 0 #111;
+}
+
+/* 正中央：DOPAMINE FEVER 凹槽与爆炸口号框 */
+.hud-center {
+  height: 100%;
+  background: #101223;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 6px;
+  position: relative;
+  border-left: 4px solid #111;
+  border-right: 4px solid #111;
+}
+
+.fever-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.fever-title {
+  font-size: clamp(13px, 1.35vw, 18px);
+  font-weight: 900;
+  font-style: italic;
+  color: #E0FBFC;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.7), 2px 2px 0 #000;
+}
+
+.fever-pct {
+  font-size: clamp(15px, 1.55vw, 21px);
+  font-weight: 900;
+  font-style: italic;
+  color: #FFBE0B;
+  text-shadow: 0 0 10px rgba(255, 190, 11, 0.9), 2px 2px 0 #000;
+}
+
+.fever-bar-outer {
+  position: relative;
+  width: 84%;
+  height: 22px;
+  background: #1B1E36;
+  border-radius: 999px;
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 0 14px rgba(255, 0, 127, 0.8), inset 0 2px 5px rgba(0,0,0,0.8);
+  padding: 2px;
+}
+
+.fever-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #FF2A54 0%, #FF9F1C 22%, #FFBE0B 42%, #CCFF00 62%, #00F0FF 82%, #FF007F 100%);
+  box-shadow: 0 0 10px rgba(204, 255, 0, 0.8);
+  transition: width 0.15s ease-out;
+}
+
+.fever-pointer {
+  position: absolute;
+  top: -11px;
+  transform: translateX(-50%);
+  color: #FFFFFF;
+  font-size: 16px;
+  text-shadow: 0 0 6px #FF007F, 1px 1px 0 #111;
+  transition: left 0.15s ease-out;
+  pointer-events: none;
+}
+
+/* 中央跨界漫画爆炸框 (FREE LOOT!! 白嫖狂欢!) */
+.speech-burst {
+  position: absolute;
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 254px;
+  height: 94px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.speech-burst.burst-pop {
+  transform: translateX(-50%) scale(1.15) rotate(2deg);
+}
+
+.speech-burst-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(4px 5px 0 #111);
+}
+
+.speech-burst-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.05;
+  transform: rotate(-3deg);
+  margin-top: -2px;
+}
+
+.burst-en {
+  font-size: 21px;
+  font-weight: 900;
+  font-style: italic;
+  color: #FF0055;
+  -webkit-text-stroke: 1.6px #111;
+  text-shadow: 2px 2px 0 #111;
+  letter-spacing: 0.5px;
+}
+
+.burst-zh {
+  font-size: 25px;
+  font-weight: 900;
+  color: #FFBE0B;
+  -webkit-text-stroke: 1.8px #111;
+  text-shadow: 3px 3px 0 #111;
+  letter-spacing: 1px;
+}
+
+/* 右侧：炸弹倒计时组件 */
+.timer-unit {
+  display: flex;
+  align-items: center;
+   position: relative;
+}
+
+.bomb-icon-wrap {
+  width: 66px;
+  height: 66px;
+  margin-right: -18px;
+  z-index: 3;
+  filter: drop-shadow(3px 3px 0 #111);
+}
+
+.bomb-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.spark-poly {
+  transform-origin: 78px 18px;
+  animation: spark-flicker 0.25s infinite alternate;
+}
+
+@keyframes spark-flicker {
+  0% { transform: scale(0.85) rotate(-10deg); }
+  100% { transform: scale(1.18) rotate(12deg); }
+}
+
+.timer-pill {
+  background: #FF006E;
+  border: 4px solid #111;
+  border-radius: 14px;
+  padding: 5px 14px 5px 24px;
+  box-shadow: 4px 4px 0 #111;
+}
+
+#hud-timer {
+  font-size: clamp(22px, 2.3vw, 32px);
+  font-weight: 900;
+  font-style: italic;
+  color: #CCFF00;
+  -webkit-text-stroke: 1.8px #111;
+  text-shadow: 2.5px 2.5px 0 #111;
+}
+
+.timer-unit.timer-danger .timer-pill {
+  background: #FF2A54;
+  animation: pulse-danger 0.3s infinite alternate;
+}
+
+@keyframes pulse-danger {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+/* ==========================================================================
+   主舞台区与 DOM 弹窗交互层
+   ========================================================================== */
+#stage-area {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  overflow: hidden;
+  background: #FFF8E7;
+}
+
+#game-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* DOM 流氓弹窗覆盖层 (Stage 2 及随机事件) */
+#popup-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 25;
+  overflow: hidden;
+}
+
+/* 弹窗与传单公共卡片 */
+.rogue-popup {
+  position: absolute;
+  pointer-events: auto;
+  border: 3.5px solid #111;
+  box-shadow: 6px 6px 0 rgba(17, 17, 17, 0.92);
+  animation: popup-spawn 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: center;
+}
+
+@keyframes popup-spawn {
+  from { transform: scale(0.2) rotate(-8deg); opacity: 0; }
+  to { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* 右屏：复古 Windows 98 / 砍一刀 99.99% 套路弹窗 */
+.rogue-popup.cyber-popup {
+  width: 240px;
+  background: #D4D0C8;
+  border-radius: 4px;
+  font-family: "Tahoma", "PingFang SC", sans-serif;
+}
+
+.cyber-popup .win-titlebar {
+  background: linear-gradient(90deg, #0A246A, #3A6EA5);
+  color: #FFF;
+  font-weight: 800;
+  font-size: 13px;
+  padding: 5px 7px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #111;
+}
+
+.cyber-popup .win-body {
+  padding: 12px 10px;
+  text-align: center;
+  color: #111;
+}
+
+.cyber-popup .win-pct {
+  font-size: 24px;
+  font-weight: 900;
+  color: #E63946;
+  margin: 4px 0;
+}
+
+.cyber-popup .win-desc {
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* 左屏：早市红黄大字报保健品传单 */
+.rogue-popup.market-flyer {
+  width: 230px;
+  background: #FFBE0B;
+  border-radius: 8px;
+  background-image: repeating-linear-gradient(45deg, rgba(255,42,84,0.08) 0 8px, transparent 8px 16px);
+}
+
+.market-flyer .flyer-header {
+  background: #FF2A54;
+  color: #FFBE0B;
+  font-weight: 900;
+  font-size: 14px;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid #111;
+}
+
+.market-flyer .flyer-body {
+  padding: 10px;
+  text-align: center;
+  color: #111;
+}
+
+.market-flyer .flyer-headline {
+  font-size: 19px;
+  font-weight: 900;
+  color: #D90429;
+  margin-bottom: 4px;
+}
+
+/* 弹窗里的真/假按钮 */
+.popup-btn-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.btn-trap {
+  background: linear-gradient(180deg, #FF2A54, #D90429);
+  color: #FFF;
+  font-weight: 900;
+  font-size: 13px;
+  padding: 6px 12px;
+  border: 2.5px solid #111;
+  border-radius: 6px;
+  box-shadow: 2px 2px 0 #111;
+  cursor: pointer;
+}
+
+.btn-real-close {
+  background: #CCFF00;
+  color: #111;
+  font-weight: 900;
+  font-size: 13px;
+  padding: 4px 9px;
+  border: 2.5px solid #111;
+  border-radius: 5px;
+  box-shadow: 2px 2px 0 #111;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.btn-real-close:hover {
+  background: #00F0FF;
+  transform: scale(1.12);
+}
+
+/* 底层暴露出来的免费鸡蛋大按钮 (Stage 2) */
+.loot-egg-node {
+  position: absolute;
+  pointer-events: auto;
+  cursor: pointer;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 4px solid #111;
+  font-weight: 900;
+  font-size: 16px;
+  box-shadow: 4px 4px 0 #111;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  animation: float-loot 0.8s ease-in-out infinite alternate;
+  transition: transform 0.1s ease;
+}
+
+.loot-egg-node:hover {
+  transform: scale(1.15);
+}
+
+.loot-egg-node.market-loot {
+  background: linear-gradient(135deg, #FFBE0B, #FF9F1C);
+  color: #111;
+}
+
+.loot-egg-node.cyber-loot {
+  background: linear-gradient(135deg, #00F0FF, #CCFF00);
+  color: #111;
+}
+
+@keyframes float-loot {
+  from { transform: translateY(-4px) rotate(-2deg); }
+  to { transform: translateY(4px) rotate(2deg); }
+}
+
+/* ==========================================================================
+   《瓦里奥制造》式关卡转场指令卡 (#stage-banner)
+   ========================================================================== */
+#stage-banner {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 17, 17, 0.55);
+  backdrop-filter: blur(3px);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.banner-card {
+  background: #FFBE0B;
+  border: 6px solid #111;
+  border-radius: 20px;
+  padding: 22px 44px;
+  box-shadow: 10px 10px 0 #FF007F, -8px -8px 0 #00F0FF;
+  text-align: center;
+  transform: rotate(-2deg);
+  animation: banner-slam 0.28s cubic-bezier(0.22, 1.6, 0.36, 1);
+}
+
+@keyframes banner-slam {
+  0% { transform: scale(2.2) rotate(8deg); opacity: 0; }
+  100% { transform: scale(1) rotate(-2deg); opacity: 1; }
+}
+
+.banner-stage-num {
+  display: inline-block;
+  background: #111;
+  color: #CCFF00;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 18px;
+  padding: 4px 16px;
+  border-radius: 99px;
+  margin-bottom: 8px;
+}
+
+.banner-action-title {
+  font-size: clamp(28px, 3.6vw, 48px);
+  font-weight: 900;
+  color: #FFFFFF;
+  -webkit-text-stroke: 2.5px #111;
+  text-shadow: 4px 4px 0 #FF2A54;
+  margin-bottom: 6px;
+}
+
+.banner-sub-desc {
+  font-size: 16px;
+  font-weight: 800;
+  color: #111;
+}
+
+/* Stage 3 连点提示条 */
+#mash-overlay {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 35;
+}
+
+.mash-prompt {
+  background: linear-gradient(90deg, #FF2A54, #FFBE0B, #00F0FF);
+  color: #111;
+  font-size: 20px;
+  font-weight: 900;
+  padding: 10px 28px;
+  border-radius: 999px;
+  border: 4px solid #111;
+  box-shadow: 5px 5px 0 #111;
+  cursor: pointer;
+  animation: mash-pulse 0.2s infinite alternate;
+}
+
+@keyframes mash-pulse {
+  from { transform: scale(0.96); }
+  to { transform: scale(1.06); }
+}
+
+/* 右下角快捷工具按钮 */
+#QuickTools {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  z-index: 38;
+  display: flex;
+  gap: 8px;
+}
+
+.tool-pill {
+  background: rgba(255, 255, 255, 0.9);
+  color: #111;
+  font-weight: 900;
+  font-size: 12px;
+  padding: 5px 11px;
+  border: 2.5px solid #111;
+  border-radius: 99px;
+  box-shadow: 2px 2px 0 #111;
+  cursor: pointer;
+}
+
+.tool-pill:hover {
+  background: #CCFF00;
+}
+
+/* ==========================================================================
+   开场主菜单 & 结局基因诊断书弹窗 (#start-screen, #result-screen)
+   ========================================================================== */
+.overlay-screen {
+  position: absolute;
+  inset: 0;
+  background: rgba(16, 10, 30, 0.82);
+  backdrop-filter: blur(6px);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.start-card, .diagnosis-card {
+  width: min(760px, 94%);
+  background: #FFF8E7;
+  border: 5px solid #111;
+  border-radius: 22px;
+  box-shadow: 10px 10px 0 #FF2A54, -8px -8px 0 #00F0FF;
+  padding: 22px 28px;
+  text-align: center;
+  position: relative;
+}
+
+.badge-tag {
+  display: inline-block;
+  background: #CCFF00;
+  color: #111;
+  font-weight: 900;
+  font-size: 13px;
+  padding: 4px 14px;
+  border: 3px solid #111;
+  border-radius: 99px;
+  box-shadow: 3px 3px 0 #111;
+  margin-bottom: 8px;
+}
+
+.game-logo {
+  font-size: clamp(34px, 4.4vw, 56px);
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1.05;
+  margin-bottom: 6px;
+}
+
+.logo-left {
+  color: #FF2A54;
+  -webkit-text-stroke: 2.2px #111;
+  text-shadow: 4px 4px 0 #111;
+}
+
+.logo-bolt {
+  color: #FFBE0B;
+  -webkit-text-stroke: 2px #111;
+}
+
+.logo-right {
+  color: #00F0FF;
+  -webkit-text-stroke: 2.2px #111;
+  text-shadow: 4px 4px 0 #111;
+}
+
+.game-tagline {
+  font-size: 15px;
+  font-weight: 800;
+  color: #333;
+  margin-bottom: 14px;
+}
+
+.duality-preview {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.preview-half {
+  padding: 10px 12px;
+  border: 3.5px solid #111;
+  border-radius: 14px;
+  box-shadow: 4px 4px 0 #111;
+  text-align: left;
+}
+
+.preview-market {
+  background: #FFE5EC;
+}
+
+.preview-cyber {
+  background: #E0FBFC;
+}
+
+.preview-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 900;
+  background: #111;
+  color: #FFBE0B;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+}
+
+.preview-actor {
+  font-size: 18px;
+  font-weight: 900;
+  color: #111;
+  margin-bottom: 3px;
+}
+
+.preview-half p {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #222;
+  line-height: 1.45;
+}
+
+.trap-warn {
+  color: #D90429;
+  font-weight: 900;
+}
+
+.preview-vs {
+  background: #FFBE0B;
+  border: 3.5px solid #111;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.1;
+  box-shadow: 3px 3px 0 #111;
+}
+
+.controls-guide {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+  background: #FFF;
+  border: 3px solid #111;
+  border-radius: 12px;
+  padding: 9px 14px;
+  margin-bottom: 16px;
+  font-size: 12.5px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.controls-guide code {
+  background: #FFBE0B;
+  padding: 1px 5px;
+  border-radius: 4px;
+  border: 1.5px solid #111;
+  font-weight: 900;
+}
+
+.mega-cta-btn {
+  background: linear-gradient(90deg, #FF2A54, #FFBE0B, #CCFF00, #00F0FF);
+  background-size: 200% 100%;
+  color: #111;
+  font-size: 21px;
+  font-weight: 900;
+  padding: 12px 36px;
+  border: 4px solid #111;
+  border-radius: 999px;
+  box-shadow: 6px 6px 0 #111;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  animation: rainbow-shift 3s linear infinite;
+}
+
+@keyframes rainbow-shift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.mega-cta-btn:hover {
+  transform: translate(-2px, -2px) scale(1.03);
+  box-shadow: 8px 8px 0 #111;
+}
+
+.mega-cta-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 2px 2px 0 #111;
+}
+
+/* 结算诊断书样式 */
+.diagnosis-stamp {
+  position: absolute;
+  top: 16px;
+  right: 22px;
+  border: 4px solid #FF0055;
+  color: #FF0055;
+  font-weight: 900;
+  font-size: 18px;
+  padding: 4px 12px;
+  border-radius: 8px;
+  transform: rotate(10deg);
+  box-shadow: inset 0 0 0 2px #FF0055;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.diagnosis-header h2 {
+  font-size: 26px;
+  font-weight: 900;
+  color: #111;
+  margin-bottom: 4px;
+}
+
+.diagnosis-header p {
+  font-size: 13px;
+  font-weight: 700;
+  color: #555;
+  margin-bottom: 14px;
+}
+
+.diagnosis-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.metric-box {
+  background: #FFFFFF;
+  border: 3.5px solid #111;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 4px 4px 0 #111;
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-label {
+  font-size: 12px;
+  font-weight: 800;
+  color: #555;
+}
+
+.metric-val {
+  font-size: 24px;
+  font-weight: 900;
+  color: #111;
+}
+
+.metric-val.highlight-pink {
+  color: #FF0055;
+}
+
+.diagnosis-comment {
+  background: #FFBE0B;
+  border: 3.5px solid #111;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.5;
+  color: #111;
+  box-shadow: 4px 4px 0 #111;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.diagnosis-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.secondary-cta-btn {
+  background: #00F0FF;
+  color: #111;
+  font-size: 16px;
+  font-weight: 900;
+  padding: 10px 22px;
+  border: 4px solid #111;
+  border-radius: 999px;
+  box-shadow: 5px 5px 0 #111;
+  cursor: pointer;
+}
+
+.secondary-cta-btn:hover {
+  background: #CCFF00;
+}
+
+.small-cta {
+  font-size: 16px;
+  padding: 10px 26px;
+}
+
+/* ==========================================================================
+   定制波普漫画风矢量 SVG 图标对齐样式 (替代所有原生 Emoji)
+   ========================================================================== */
+.logo-bolt-svg {
+  width: clamp(32px, 3.8vw, 48px);
+  height: clamp(36px, 4.2vw, 54px);
+  vertical-align: middle;
+  margin: 0 2px;
+  filter: drop-shadow(3px 3px 0 #111);
+}
+
+.actor-badge-svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.preview-actor {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.warn-tri-svg {
+  width: 17px;
+  height: 17px;
+  vertical-align: -3px;
+  margin-right: 2px;
+}
+
+.guide-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.guide-svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.mega-cta-btn, .secondary-cta-btn, .tool-pill, .mash-prompt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.cta-bolt-svg {
+  width: 22px;
+  height: 24px;
+}
+
+.tool-svg-icon, .btn-svg-icon, .inline-pop-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.diagnosis-header h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.header-cross-svg {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.popup-svg-icon {
+  width: 18px;
+  height: 18px;
+  vertical-align: -3px;
+  margin-right: 4px;
+  flex-shrink: 0;
+}
+

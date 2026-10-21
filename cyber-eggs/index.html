@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>隔代夺蛋：2026 | Cyber Eggs: Generational Rush</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><ellipse cx='32' cy='34' rx='22' ry='27' fill='%23FFBE0B' stroke='%23111' stroke-width='5'/><ellipse cx='24' cy='24' rx='5' ry='9' transform='rotate(-20 24 24)' fill='%23FFF'/></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app-shell">
+    <!-- 16:9 街机游戏主容器 -->
+    <div id="game-container">
+      
+      <!-- 顶部街机 HUD 状态栏 (1:1 还原概念效果图) -->
+      <header id="arcade-hud">
+        <div class="hazard-strip top-strip"></div>
+        
+        <div class="hud-main-row">
+          <!-- 左侧：王大妈头像 + 分数 -->
+          <div class="hud-side hud-left">
+            <div class="avatar-box grandma-avatar" id="hud-grandma-avatar" title="早市战神·王大妈">
+              <svg viewBox="0 0 100 100" class="avatar-svg">
+                <rect width="100" height="100" rx="14" fill="#FF5C77"/>
+                <!-- 爆炸卷发 -->
+                <circle cx="30" cy="34" r="16" fill="#4A2E2B" stroke="#111" stroke-width="4"/>
+                <circle cx="50" cy="26" r="18" fill="#4A2E2B" stroke="#111" stroke-width="4"/>
+                <circle cx="70" cy="34" r="16" fill="#4A2E2B" stroke="#111" stroke-width="4"/>
+                <circle cx="24" cy="52" r="14" fill="#4A2E2B" stroke="#111" stroke-width="4"/>
+                <circle cx="76" cy="52" r="14" fill="#4A2E2B" stroke="#111" stroke-width="4"/>
+                <!-- 脸庞 -->
+                <circle cx="50" cy="58" r="24" fill="#FFD1B3" stroke="#111" stroke-width="4"/>
+                <!-- 圆框老花镜 + 四角星星眼 -->
+                <circle cx="39" cy="55" r="10" fill="#B8F2E6" stroke="#111" stroke-width="3.5"/>
+                <circle cx="61" cy="55" r="10" fill="#B8F2E6" stroke="#111" stroke-width="3.5"/>
+                <line x1="49" y1="55" x2="51" y2="55" stroke="#111" stroke-width="3.5"/>
+                <polygon points="39,48 41,53 46,55 41,57 39,62 37,57 32,55 37,53" fill="#FFBE0B"/>
+                <polygon points="61,48 63,53 68,55 63,57 61,62 59,57 54,55 59,53" fill="#FFBE0B"/>
+                <!-- 开心大嘴 -->
+                <path d="M 41 68 Q 50 79 59 68 Z" fill="#E63946" stroke="#111" stroke-width="3"/>
+              </svg>
+            </div>
+            <div class="score-block">
+              <div class="score-label">SCORE:</div>
+              <div class="score-value" id="hud-score">0</div>
+            </div>
+          </div>
+
+          <!-- 漫画爆炸星标 COMBO (跨出 HUD 底栏边缘，不受 clip-path 裁切) -->
+          <div class="combo-burst" id="hud-combo-burst">
+            <svg viewBox="0 0 140 90" class="burst-bg">
+              <polygon points="70,2 86,20 115,8 108,32 138,38 116,55 132,78 100,72 92,88 70,74 48,88 40,72 8,78 24,55 2,38 32,32 25,8 54,20" fill="#FFBE0B" stroke="#111" stroke-width="4"/>
+            </svg>
+            <div class="combo-text">
+              <span>COMBO</span>
+              <strong id="hud-combo">x1</strong>
+            </div>
+          </div>
+
+          <!-- 正中央：多巴胺浓度计 (DOPAMINE FEVER) -->
+          <div class="hud-center">
+            <div class="fever-header">
+              <span class="fever-title">DOPAMINE FEVER</span>
+              <span class="fever-pct" id="hud-fever-pct">25.0%</span>
+            </div>
+            <div class="fever-bar-outer" id="hud-fever-outer">
+              <div class="fever-bar-fill" id="hud-fever-fill" style="width: 25%;"></div>
+              <div class="fever-pointer" id="hud-fever-pointer" style="left: 25%;">
+                <svg viewBox="0 0 20 16" width="16" height="14">
+                  <polygon points="2,2 18,2 10,15" fill="#FFFFFF" stroke="#111" stroke-width="2.5"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- 右侧：炸弹倒计时 + 大孙子头像 -->
+          <div class="hud-side hud-right">
+            <div class="timer-unit" id="hud-timer-unit">
+              <div class="bomb-icon-wrap">
+                <svg viewBox="0 0 90 90" class="bomb-svg">
+                  <path d="M 52 24 Q 64 10 74 16" fill="none" stroke="#D4A373" stroke-width="5" stroke-linecap="round"/>
+                  <polygon points="75,16 80,6 83,15 90,12 84,20 89,27 80,23 75,30 74,21 66,18" fill="#FFBE0B" stroke="#FF2A54" stroke-width="2" class="spark-poly"/>
+                  <rect x="38" y="20" width="16" height="10" rx="3" fill="#4A4E69" stroke="#111" stroke-width="4"/>
+                  <circle cx="44" cy="54" r="28" fill="#2B2D42" stroke="#111" stroke-width="4.5"/>
+                  <ellipse cx="34" cy="44" rx="7" ry="10" transform="rotate(-25 34 44)" fill="#5C6285"/>
+                </svg>
+              </div>
+              <div class="timer-pill">
+                <span id="hud-timer">15.0s</span>
+              </div>
+            </div>
+
+            <div class="avatar-box grandson-avatar" id="hud-grandson-avatar" title="赛博仓鼠·大孙子">
+              <svg viewBox="0 0 100 100" class="avatar-svg">
+                <rect width="100" height="100" rx="14" fill="#00BBF9"/>
+                <polygon points="18,42 24,14 42,28" fill="#9B5DE5" stroke="#111" stroke-width="4"/>
+                <polygon points="23,36 27,20 37,29" fill="#00F5D4"/>
+                <polygon points="82,42 76,14 58,28" fill="#9B5DE5" stroke="#111" stroke-width="4"/>
+                <polygon points="77,36 73,20 63,29" fill="#00F5D4"/>
+                <path d="M 16 58 A 34 34 0 0 1 84 58" fill="none" stroke="#7B2CBF" stroke-width="7"/>
+                <polygon points="24,48 30,26 42,36 50,20 58,36 70,26 76,48" fill="#6F4E37" stroke="#111" stroke-width="4"/>
+                <circle cx="50" cy="60" r="23" fill="#FFE0CC" stroke="#111" stroke-width="4"/>
+                <ellipse cx="22" cy="60" rx="6" ry="12" fill="#FF007F" stroke="#111" stroke-width="3.5"/>
+                <ellipse cx="78" cy="60" rx="6" ry="12" fill="#FF007F" stroke="#111" stroke-width="3.5"/>
+                <circle cx="39" cy="57" r="9.5" fill="#00F5D4" stroke="#111" stroke-width="3.5"/>
+                <circle cx="61" cy="57" r="9.5" fill="#00F5D4" stroke="#111" stroke-width="3.5"/>
+                <line x1="48.5" y1="57" x2="51.5" y2="57" stroke="#111" stroke-width="3.5"/>
+                <polygon points="39,50 41,55 46,57 41,59 39,64 37,59 32,57 37,55" fill="#FFBE0B"/>
+                <polygon points="61,50 63,55 68,57 63,59 61,64 59,59 54,57 59,55" fill="#FFBE0B"/>
+                <path d="M 41 70 Q 50 81 59 70 Z" fill="#FF2A54" stroke="#111" stroke-width="3"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="hazard-strip bottom-strip"></div>
+
+        <!-- 跨界漫画爆炸框 (置于 bottom-strip 之后与最高 z-index，完全避免任何黑黄斜纹遮挡) -->
+        <div class="speech-burst" id="hud-speech-burst">
+          <svg viewBox="0 0 280 120" class="speech-burst-svg" preserveAspectRatio="none">
+            <polygon points="140,4 168,26 212,6 204,36 264,24 234,56 276,74 228,86 248,114 190,100 168,118 140,98 112,118 90,100 32,114 52,86 4,74 46,56 16,24 76,36 68,6 112,26" fill="#FFFFFF" stroke="#111111" stroke-width="5"/>
+          </svg>
+          <div class="speech-burst-content">
+            <div class="burst-en" id="hud-burst-en">FREE LOOT!!</div>
+            <div class="burst-zh" id="hud-burst-zh">白嫖狂欢!</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- 主舞台区：Canvas 2D + DOM 流氓弹窗覆盖层 -->
+      <main id="stage-area">
+        <canvas id="game-canvas" width="1280" height="580"></canvas>
+
+        <!-- Stage 2 & 随机事件：DOM 流氓弹窗与保健品传单交互层 -->
+        <div id="popup-layer"></div>
+
+        <!-- 关卡切换《瓦里奥制造》式波普大字指令卡 -->
+        <div id="stage-banner" class="hidden">
+          <div class="banner-card">
+            <div class="banner-stage-num" id="banner-stage-num">STAGE 01</div>
+            <div class="banner-action-title" id="banner-action-title">左右移动！接住白嫖！</div>
+            <div class="banner-sub-desc" id="banner-sub-desc">方向键 ← → / A D / 鼠标拖拽同时控制祖孙二人</div>
+          </div>
+        </div>
+
+        <!-- Stage 3 专用：连点狂飙按键提示浮层 -->
+        <div id="mash-overlay" class="hidden">
+          <div class="mash-prompt" id="mash-prompt-btn">
+            <svg class="inline-pop-icon" viewBox="0 0 24 24">
+              <polygon points="13,2 4,14 11,14 9,22 20,10 13,10" fill="#FFBE0B" stroke="#111" stroke-width="2.5"/>
+            </svg>
+            <span>疯狂连按【空格键】或【狂点屏幕】！！</span>
+          </div>
+        </div>
+
+        <!-- 音效开关与切关小工具栏 (纯定制 SVG 图标，零 Emoji) -->
+        <div id="QuickTools">
+          <button id="mute-btn" class="tool-pill" title="切换音效 (M)">
+            <svg class="tool-svg-icon" viewBox="0 0 24 24">
+              <polygon points="3,9 8,9 14,4 14,20 8,15 3,15" fill="#FFBE0B" stroke="#111" stroke-width="2.5" stroke-linejoin="round"/>
+              <path id="sound-wave-path" d="M17,8 C19.5,10 19.5,14 17,16 M20,5 C23.5,8.5 23.5,15.5 20,19" fill="none" stroke="#111" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+            <span id="mute-btn-label">音效 ON</span>
+          </button>
+          <button id="stage-jump-btn" class="tool-pill" title="快速切关调试 (Tab)">
+            <svg class="tool-svg-icon" viewBox="0 0 24 24">
+              <polygon points="3,5 12,12 3,19" fill="#00F0FF" stroke="#111" stroke-width="2.5" stroke-linejoin="round"/>
+              <polygon points="12,5 21,12 12,19" fill="#CCFF00" stroke="#111" stroke-width="2.5" stroke-linejoin="round"/>
+            </svg>
+            <span>下一关</span>
+          </button>
+        </div>
+
+        <!-- 开场主界面 (Start Screen) -->
+        <section id="start-screen" class="overlay-screen">
+          <div class="start-card">
+            <div class="badge-tag">2026 年度多巴胺反套路街机爽游</div>
+            <h1 class="game-logo">
+              <span class="logo-left">隔代夺蛋</span>
+              <svg class="logo-bolt-svg" viewBox="0 0 44 54">
+                <polygon points="26,2 4,30 20,30 14,52 40,22 24,22" fill="#FFBE0B" stroke="#111" stroke-width="4" stroke-linejoin="round"/>
+              </svg>
+              <span class="logo-right">2026</span>
+            </h1>
+            <p class="game-tagline">“质疑大妈，理解大妈，成为大妈 —— 一代人有一代人的鸡蛋要领！”</p>
+
+            <div class="duality-preview">
+              <div class="preview-half preview-market">
+                <div class="preview-badge">左屏 · 晨光红星早市</div>
+                <div class="preview-actor">
+                  <svg class="actor-badge-svg" viewBox="0 0 32 32">
+                    <circle cx="16" cy="16" r="14" fill="#FF2A54" stroke="#111" stroke-width="3"/>
+                    <ellipse cx="16" cy="17" rx="7" ry="9" fill="#FFBE0B" stroke="#111" stroke-width="2.5"/>
+                  </svg>
+                  <span>早市战神 · 王大妈</span>
+                </div>
+                <p>
+                  黄金土鸡蛋 · 特价大白菜 · 满减红券<br>
+                  <span class="trap-warn">
+                    <svg class="warn-tri-svg" viewBox="0 0 24 24">
+                      <polygon points="12,2 22,20 2,20" fill="#FFBE0B" stroke="#111" stroke-width="2.5" stroke-linejoin="round"/>
+                      <rect x="10.8" y="8" width="2.4" height="6" fill="#111"/>
+                      <circle cx="12" cy="17" r="1.5" fill="#111"/>
+                    </svg>
+                    躲避：带刺假冒保健床垫！
+                  </span>
+                </p>
+              </div>
+              <div class="preview-vs">同构<br>同步</div>
+              <div class="preview-half preview-cyber">
+                <div class="preview-badge">右屏 · 深夜RGB电竞房</div>
+                <div class="preview-actor">
+                  <svg class="actor-badge-svg" viewBox="0 0 32 32">
+                    <circle cx="16" cy="16" r="14" fill="#7B2CBF" stroke="#111" stroke-width="3"/>
+                    <rect x="9" y="9" width="14" height="14" rx="3" fill="#CCFF00" stroke="#111" stroke-width="2.5"/>
+                  </svg>
+                  <span>赛博仓鼠 · 大孙子</span>
+                </div>
+                <p>
+                  赛博霓虹蛋 · -100%喜加一 · 免费Token<br>
+                  <span class="trap-warn">
+                    <svg class="warn-tri-svg" viewBox="0 0 24 24">
+                      <polygon points="12,2 22,20 2,20" fill="#FFBE0B" stroke="#111" stroke-width="2.5" stroke-linejoin="round"/>
+                      <rect x="10.8" y="8" width="2.4" height="6" fill="#111"/>
+                      <circle cx="12" cy="17" r="1.5" fill="#111"/>
+                    </svg>
+                    躲避：99.99%砍一刀与全家桶！
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <div class="controls-guide">
+              <span class="guide-item">
+                <svg class="guide-svg" viewBox="0 0 24 24">
+                  <polygon points="2,12 9,6 9,18" fill="#FF2A54" stroke="#111" stroke-width="2"/>
+                  <polygon points="22,12 15,6 15,18" fill="#00F0FF" stroke="#111" stroke-width="2"/>
+                </svg>
+                <strong>Stage 1</strong>：<code>←/→</code> 或鼠标移动接蛋
+              </span>
+              <span class="guide-item">
+                <svg class="guide-svg" viewBox="0 0 24 24">
+                  <rect x="3" y="3" width="18" height="18" rx="4" fill="#CCFF00" stroke="#111" stroke-width="2.5"/>
+                  <path d="M7,7 L17,17 M17,7 L7,17" stroke="#111" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+                <strong>Stage 2</strong>：点击真 <code>[X]</code> 撕碎套路弹窗
+              </span>
+              <span class="guide-item">
+                <svg class="guide-svg" viewBox="0 0 24 24">
+                  <polygon points="13,2 4,14 11,14 9,22 20,10 13,10" fill="#FFBE0B" stroke="#111" stroke-width="2"/>
+                </svg>
+                <strong>Stage 3</strong>：狂按 <code>空格/鼠标</code> 砸碎 99.99%
+              </span>
+              <span class="guide-item">
+                <svg class="guide-svg" viewBox="0 0 24 24">
+                  <polygon points="12,2 15,9 22,12 15,15 12,22 9,15 2,12 9,9" fill="#FF007F" stroke="#111" stroke-width="2"/>
+                </svg>
+                <strong>Stage 4</strong>：祖孙合体全屏暴风吸入
+              </span>
+            </div>
+
+            <button id="start-btn" class="mega-cta-btn">
+              <span>立即开抢！分泌多巴胺</span>
+              <svg class="cta-bolt-svg" viewBox="0 0 28 32">
+                <polygon points="16,2 3,18 13,18 9,30 25,13 15,13" fill="#FFFFFF" stroke="#111" stroke-width="3" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </section>
+
+        <!-- 结算界面：《赛博领蛋多巴胺基因诊断书》 -->
+        <section id="result-screen" class="overlay-screen hidden">
+          <div class="diagnosis-card" id="diagnosis-card">
+            <div class="diagnosis-stamp" id="result-stamp">绝世赛博老太太</div>
+            <div class="diagnosis-header">
+              <h2>
+                <svg class="header-cross-svg" viewBox="0 0 32 32">
+                  <rect x="2" y="2" width="28" height="28" rx="6" fill="#FF2A54" stroke="#111" stroke-width="3"/>
+                  <path d="M16,7 V25 M7,16 H25" stroke="#FFF" stroke-width="5" stroke-linecap="round"/>
+                </svg>
+                <span>2026 赛博领蛋多巴胺基因诊断书</span>
+              </h2>
+              <p id="result-subtitle">检测机构：红星早市 × 赛博白嫖联合实验室</p>
+            </div>
+
+            <div class="diagnosis-metrics">
+              <div class="metric-box">
+                <span class="metric-label">多巴胺总积分</span>
+                <strong class="metric-val" id="res-score">99,850</strong>
+              </div>
+              <div class="metric-box">
+                <span class="metric-label">与王大妈基因重合度</span>
+                <strong class="metric-val highlight-pink" id="res-dna">99.98%</strong>
+              </div>
+              <div class="metric-box">
+                <span class="metric-label">白嫖入库喜加一/土鸡蛋</span>
+                <strong class="metric-val" id="res-eggs">42 颗</strong>
+              </div>
+              <div class="metric-box">
+                <span class="metric-label">手撕 99.99% 套路弹窗</span>
+                <strong class="metric-val" id="res-popups">18 个</strong>
+              </div>
+            </div>
+
+            <div class="diagnosis-comment" id="res-comment">
+              “短短 60 秒内，你的大脑因为‘免费’二字分泌了相当于 3 顿火锅的多巴胺。虽然抢到的 3A 大作你一辈子不会打开，但你已经彻底领悟了早市王大妈的快乐。”
+            </div>
+
+            <div class="diagnosis-actions">
+              <button id="export-png-btn" class="secondary-cta-btn">
+                <svg class="btn-svg-icon" viewBox="0 0 24 24">
+                  <rect x="3" y="6" width="18" height="14" rx="3" fill="#FFBE0B" stroke="#111" stroke-width="2.5"/>
+                  <circle cx="12" cy="13" r="4" fill="#FFF" stroke="#111" stroke-width="2.5"/>
+                </svg>
+                <span>导出诊断书海报 (PNG)</span>
+              </button>
+              <button id="restart-btn" class="mega-cta-btn small-cta">
+                <svg class="btn-svg-icon" viewBox="0 0 24 24">
+                  <path d="M4,12 A8,8 0 1,1 12,20" fill="none" stroke="#111" stroke-width="3" stroke-linecap="round"/>
+                  <polygon points="4,7 4,14 11,14" fill="#111"/>
+                </svg>
+                <span>再抢一轮！</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
