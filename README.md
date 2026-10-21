@@ -3,6 +3,7 @@
 **模型演练场（Model Playground）** 汇集了由前沿大模型端到端编写完成的浏览器原生互动游戏与声学实验项目，零构建依赖，通过 **GitHub Pages** 即点即玩。
 
 - **演练场门户首页**：<https://yuanyang749.github.io/model-playground/>
+- **作者 X (Twitter)**：[@Delroy715](https://x.com/Delroy715)（欢迎关注，持续分享前沿大模型实测与作品）
 
 ---
 

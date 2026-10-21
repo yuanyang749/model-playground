@@ -147,22 +147,56 @@
         box-shadow: 0 0 8px var(--cyan);
       }
 
+      .header-links {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .x-link,
       .gh-link {
         display: inline-flex;
         align-items: center;
         gap: 8px;
         padding: 10px 16px;
         border-radius: 8px;
-        border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.03);
         color: var(--text);
         text-decoration: none;
         font-family: 'JetBrains Mono', monospace;
         font-size: 13px;
-        transition: border-color 0.2s, background 0.2s;
+        transition: transform 0.18s ease, border-color 0.2s, background 0.2s, box-shadow 0.2s;
+      }
+
+      .x-link {
+        font-weight: 600;
+        border: 1px solid rgba(244, 178, 75, 0.55);
+        background: linear-gradient(135deg, rgba(244, 178, 75, 0.16), rgba(56, 214, 245, 0.12));
+        color: #fff6e5;
+        box-shadow: 0 4px 18px rgba(244, 178, 75, 0.12);
+      }
+
+      .x-link:hover {
+        transform: translateY(-1px);
+        border-color: rgba(244, 178, 75, 0.9);
+        background: linear-gradient(135deg, rgba(244, 178, 75, 0.26), rgba(56, 214, 245, 0.2));
+        box-shadow: 0 6px 22px rgba(244, 178, 75, 0.22);
+      }
+
+      .x-link svg {
+        width: 14px;
+        height: 14px;
+        fill: currentColor;
+        flex-shrink: 0;
+      }
+
+      .gh-link {
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.03);
       }
 
       .gh-link:hover {
+        transform: translateY(-1px);
         border-color: var(--border-bright);
         background: rgba(255, 255, 255, 0.07);
       }
@@ -395,10 +429,24 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        align-items: center;
         gap: 12px;
         color: var(--muted);
         font-family: 'JetBrains Mono', monospace;
         font-size: 12px;
+      }
+
+      .footer-x {
+        color: var(--amber);
+        text-decoration: none;
+        font-weight: 600;
+        border-bottom: 1px dashed rgba(244, 178, 75, 0.5);
+        transition: color 0.2s, border-color 0.2s;
+      }
+
+      .footer-x:hover {
+        color: #ffe3b0;
+        border-color: #ffe3b0;
       }
     </style>
   </head>
@@ -417,10 +465,19 @@
             <span class="legend-chip"><i class="legend-dot opus"></i>Claude Opus 5.5 (2)</span>
             <span class="legend-chip"><i class="legend-dot gemini"></i>Gemini 4 Argon (1)</span>
           </div>
-          <a class="gh-link" href="https://github.com/yuanyang749/model-playground" target="_blank" rel="noopener">
-            <span>GitHub 仓库源码</span>
-            <span>↗</span>
-          </a>
+          <div class="header-links">
+            <a class="x-link" href="https://x.com/Delroy715" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
+              <span>关注 @Delroy715</span>
+              <span>↗</span>
+            </a>
+            <a class="gh-link" href="https://github.com/yuanyang749/model-playground" target="_blank" rel="noopener">
+              <span>GitHub 仓库源码</span>
+              <span>↗</span>
+            </a>
+          </div>
         </div>
       </header>
 
@@ -532,8 +589,8 @@
       </main>
 
       <footer>
-        <span>模型演练场 · Model Playground — 探索前沿模型的端到端创造力</span>
-        <span>Hosted on GitHub Pages</span>
+        <span>模型演练场 · Model Playground — 由 <a class="footer-x" href="https://x.com/Delroy715" target="_blank" rel="noopener">@Delroy715</a> 策划与发布</span>
+        <span>关注 X：<a class="footer-x" href="https://x.com/Delroy715" target="_blank" rel="noopener">x.com/Delroy715</a> · Hosted on GitHub Pages</span>
       </footer>
     </div>
   </body>
