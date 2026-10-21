@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VOXEL STRIKE · 方块突击</title>
+    <meta name="description" content="浏览器里的体素波次生存射击游戏：挖掘、筑墙、炸坑，守住你的前哨站。" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect width='16' height='16' fill='%2386603f'/%3E%3Crect width='16' height='5' fill='%235f9e3c'/%3E%3Crect x='7' y='5' width='2' height='2' fill='%235f9e3c'/%3E%3Crect x='2' y='9' width='2' height='2' fill='%23644a32'/%3E%3Crect x='11' y='11' width='2' height='2' fill='%23644a32'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <script type="importmap">
+      { "imports": { "three": "./vendor/three.module.js" } }
+    </script>
+  </head>
+  <body>
+    <canvas id="game"></canvas>
+
+    <!-- 游戏 HUD -->
+    <div id="hud" class="hidden">
+      <div id="water"></div>
+      <div id="vignette"></div>
+      <div id="scope"><i></i></div>
+      <canvas id="dmgIndicator" width="320" height="320"></canvas>
+      <div id="crosshair"><i></i><i></i><i></i><i></i><b></b></div>
+      <div id="hitmarker"></div>
+
+      <div id="topbar">
+        <div id="wave">准备</div>
+        <div id="waveSub"></div>
+      </div>
+      <div id="bossbar" class="hidden">
+        <span>方块巨像</span>
+        <div class="track"><i id="bossFill"></i></div>
+      </div>
+
+      <div id="score"><b id="scoreVal">0</b><span id="killsVal">击杀 0</span></div>
+      <canvas id="minimap" width="150" height="150"></canvas>
+
+      <div id="bottom">
+        <div class="hprow"><canvas id="hearts" width="180" height="14"></canvas><span id="hpVal">100</span></div>
+        <div id="hotbar"></div>
+      </div>
+      <div id="ammo">
+        <div class="nums"><b id="ammoMag">30</b><span id="ammoRes">/ 240</span></div>
+        <div id="weaponName">方块步枪</div>
+        <div id="hint"></div>
+      </div>
+
+      <div id="banner"></div>
+      <div id="feed"></div>
+    </div>
+
+    <!-- 主菜单 -->
+    <section id="menu" class="screen">
+      <div class="menu-card">
+        <h1 class="logo"><span>VOXEL</span><span>STRIKE</span></h1>
+        <div class="zh">方 块 突 击</div>
+        <p class="tagline">守住海岛前哨站。挖掘、筑墙、炸出弹坑——活过一波又一波的方块怪物。</p>
+        <button id="playBtn" class="btn primary">开始游戏</button>
+        <div id="menuBest" class="best"></div>
+        <div class="cols">
+          <div class="panel">
+            <h3>操作</h3>
+            <ul class="keys">
+              <li><kbd>W A S D</kbd> 移动</li>
+              <li><kbd>Space</kbd> 跳跃 / 上浮</li>
+              <li><kbd>Shift</kbd> 冲刺</li>
+              <li><kbd>左键</kbd> 射击 / 挖掘</li>
+              <li><kbd>右键</kbd> 瞄准 / 放置方块</li>
+              <li><kbd>R</kbd> 换弹</li>
+              <li><kbd>1–4</kbd> <kbd>滚轮</kbd> 切换武器</li>
+              <li><kbd>Esc</kbd> 暂停　<kbd>F</kbd> 全屏</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h3>敌人</h3>
+            <ul class="foes">
+              <li><i style="background:#5c9a43"></i><b>腐尸</b> 近战，被挡住会拆墙</li>
+              <li><i style="background:#d23b28"></i><b>TNT 爆破怪</b> 贴脸自爆，炸出大坑</li>
+              <li><i style="background:#d8d8cc"></i><b>骷髅射手</b> 远程抛射，会侧移</li>
+              <li><i style="background:#8a8c92"></i><b>方块巨像</b> 每 5 波出现的 Boss</li>
+            </ul>
+            <h3>设置</h3>
+            <div class="settings"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 暂停 -->
+    <section id="pause" class="screen hidden">
+      <div class="menu-card small">
+        <h2>已暂停</h2>
+        <button id="resumeBtn" class="btn primary">继续游戏</button>
+        <div class="panel"><div class="settings"></div></div>
+        <button id="quitBtn" class="btn">返回主菜单</button>
+      </div>
+    </section>
+
+    <!-- 结算 -->
+    <section id="over" class="screen hidden">
+      <div class="menu-card small">
+        <h2 class="dead">你倒下了</h2>
+        <div id="overStats" class="stats"></div>
+        <div id="overBest" class="best"></div>
+        <button id="againBtn" class="btn primary">再来一局</button>
+        <button id="menuBtn" class="btn">主菜单</button>
+      </div>
+    </section>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
