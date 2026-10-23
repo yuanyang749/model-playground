@@ -7,11 +7,11 @@ class GameBoyConsole {
   constructor() {
     this.powerOn = true;
     this.audioCtx = null;
-    this.currentCartridge = 'tank-battle';
+    this.currentCartridge = 'squishy-buddies';
     this.paletteMode = 'true'; // 'true' (原彩无扫描线), 'color' (复古扫描线), 'dmg', 'bw'
     this.inMenu = true; // Authentic Game Boy starts at the Multi-Cartridge game list!
     this.menuIndex = 0;
-    this.games = ['tank-battle', 'space-invaders', 'tetris', 'squishy-buddies', 'tutorial'];
+    this.games = ['squishy-buddies', 'tank-battle', 'space-invaders', 'tetris', 'tutorial'];
     this.pressedKeys = new Set();
     
     // Core Hardware Elements
@@ -229,7 +229,7 @@ class GameBoyConsole {
 
   launchSelectedGame() {
     if (!this.powerOn) return;
-    const gameId = this.games[this.menuIndex] || 'tank-battle';
+    const gameId = this.games[this.menuIndex] || 'squishy-buddies';
     this.playGameStartSound();
     this.vibrate(14);
     this.loadCartridge(gameId);
