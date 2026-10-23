@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#0c0d12">
+  <title>软乎乎大冒险 2006 - Game Boy 原生掌机版</title>
+  <link rel="stylesheet" href="css/squishy.css">
+  <script>
+    // Detect iframe embedding from Game Boy chassis
+    if (window !== window.parent || window.location.search.includes('embedded=1')) {
+      document.documentElement.classList.add('embedded');
+      window.addEventListener('DOMContentLoaded', () => {
+        document.body.classList.add('embedded');
+      });
+    }
+  </script>
+</head>
+<body>
+
+  <div id="console-wrapper">
+    <!-- Top Screen Area -->
+    <div id="screen-section">
+      <div id="screen-bezel">
+        <canvas id="gameCanvas" width="320" height="240"></canvas>
+      </div>
+    </div>
+
+    <!-- Standalone Controller Deck (Shown only when playing outside Game Boy shell) -->
+    <div id="gamepad-deck">
+      <!-- System Bar -->
+      <div class="system-row">
+        <button class="pill-btn" id="btn-sound">🔊 声音: 开</button>
+        <button class="pill-btn" id="btn-switch">🔄 换人 (SEL)</button>
+        <button class="pill-btn" id="btn-pause">⏸ 暂停</button>
+      </div>
+
+      <!-- Main Controls Row -->
+      <div class="main-controls-row">
+        <!-- D-Pad -->
+        <div class="dpad-cross">
+          <div class="dpad-btn up" id="btn-up">▲</div>
+          <div class="dpad-btn left" id="btn-left">◀</div>
+          <div class="dpad-btn down" id="btn-down">▼</div>
+          <div class="dpad-btn right" id="btn-right">▶</div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons-group">
+          <!-- B Button: Spit Bubble -->
+          <div class="action-btn-wrapper">
+            <div class="action-btn" id="btn-spit">B</div>
+            <span class="action-label">吐泡泡</span>
+          </div>
+
+          <!-- A Button: Jump -->
+          <div class="action-btn-wrapper">
+            <div class="action-btn" id="btn-jump">A</div>
+            <span class="action-label">跳跃</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Scripts -->
+  <script src="js/audio.js"></script>
+  <script src="js/physics.js"></script>
+  <script src="js/entities.js"></script>
+  <script src="js/levels.js"></script>
+  <script src="js/fx.js"></script>
+  <script src="js/game.js"></script>
+
+</body>
+</html>

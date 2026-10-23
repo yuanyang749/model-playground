@@ -1,0 +1,397 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+:root {
+  --primary: #ffd700;
+  --accent: #ff3344;
+  --turbo: #ff9800;
+  --dpad-bg: #222226;
+  --dpad-active: #ff3344;
+  --body-bg: #141416;
+  --screen-bezel: #252528;
+}
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  touch-action: none;
+  overscroll-behavior: none;
+  background: var(--body-bg);
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", sans-serif;
+}
+
+/* Standalone Console Layout */
+#console-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  padding: env(safe-area-inset-top, 6px) env(safe-area-inset-right, 12px) env(safe-area-inset-bottom, 12px) env(safe-area-inset-left, 12px);
+  box-sizing: border-box;
+}
+
+/* Screen Area with Bezel */
+#screen-section {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* LCD Header HUD */
+#lcd-hud {
+  width: 100%;
+  background: var(--screen-bezel);
+  border: 3px solid #38383c;
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 900;
+  color: #bbb;
+  letter-spacing: 0.5px;
+}
+.hud-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.hud-num {
+  color: var(--primary);
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+}
+
+/* Retro CRT Canvas Screen */
+#screen-bezel {
+  width: 100%;
+  max-width: min(94vw, 44vh);
+  aspect-ratio: 1 / 1;
+  background: #000;
+  border: 3px solid #38383c;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9), inset 0 0 10px rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+canvas#gameCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Gamepad Deck Area (Bottom Half) */
+#gamepad-deck {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  flex: 1;
+  min-height: 220px;
+  touch-action: none;
+}
+
+/* System Micro-buttons */
+.system-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-top: 4px;
+}
+.pill-btn {
+  background: #2c2c32;
+  border: 1px solid #444;
+  color: #aaa;
+  padding: 5px 12px;
+  border-radius: 14px;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.6);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s, color 0.18s, border-color 0.18s, transform 0.1s;
+}
+.pill-btn:hover {
+  background: #383842;
+  color: #fff;
+}
+.pill-btn:active, .pill-btn.active {
+  background: #444;
+  color: #fff;
+  transform: translateY(1px);
+}
+.pill-btn.nav-back {
+  background: rgba(255, 87, 34, 0.14);
+  border-color: rgba(255, 87, 34, 0.45);
+  color: #ffab91;
+}
+.pill-btn.nav-back:hover {
+  background: rgba(255, 87, 34, 0.28);
+  border-color: rgba(255, 87, 34, 0.85);
+  color: #fff;
+}
+
+/* Main Touch Controls: D-Pad on Left, Buttons on Right */
+.main-controls-row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px;
+}
+
+/* Responsive Sliding Cross D-Pad */
+.dpad-touchzone {
+  width: 154px;
+  height: 154px;
+  position: relative;
+  background: radial-gradient(circle, #25252a 0%, #151518 70%);
+  border: 3px solid #333338;
+  border-radius: 50%;
+  box-shadow: inset 0 3px 12px rgba(0,0,0,0.9), 0 4px 14px rgba(0,0,0,0.6);
+  touch-action: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dpad-cross {
+  position: absolute;
+  width: 116px;
+  height: 116px;
+  pointer-events: none;
+}
+.dpad-arm {
+  position: absolute;
+  background: #2a2a30;
+  border: 2px solid #3e3e46;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #777;
+  transition: all 0.08s ease;
+}
+.dpad-arm.active {
+  background: var(--dpad-active);
+  color: #fff;
+  border-color: #fff;
+  box-shadow: 0 0 12px var(--dpad-active);
+  transform: scale(0.96);
+}
+.dpad-arm.up {
+  top: 0; left: 38px; width: 40px; height: 42px; border-bottom: none; border-radius: 8px 8px 0 0;
+}
+.dpad-arm.down {
+  bottom: 0; left: 38px; width: 40px; height: 42px; border-top: none; border-radius: 0 0 8px 8px;
+}
+.dpad-arm.left {
+  top: 38px; left: 0; width: 42px; height: 40px; border-right: none; border-radius: 8px 0 0 8px;
+}
+.dpad-arm.right {
+  top: 38px; right: 0; width: 42px; height: 40px; border-left: none; border-radius: 0 8px 8px 0;
+}
+.dpad-core {
+  top: 38px; left: 38px; width: 40px; height: 40px;
+  background: #1c1c20;
+  position: absolute;
+  border-radius: 4px;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.8);
+}
+.dpad-indicator-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff, #888);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.8);
+  transition: transform 0.04s ease-out;
+}
+
+/* Dual Action Arcade Buttons */
+.arcade-buttons-group {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  transform: rotate(-12deg);
+}
+.arcade-btn-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.arcade-btn {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.7), inset 0 2px 4px rgba(255,255,255,0.4);
+  cursor: pointer;
+  touch-action: none;
+  font-weight: 900;
+  color: #fff;
+}
+.arcade-btn:active, .arcade-btn.active {
+  transform: scale(0.92) translateY(2px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.9);
+}
+.arcade-btn.btn-a {
+  background: radial-gradient(circle at 35% 35%, #ff4b4b, #b71c1c);
+  border: 3px solid #ff7b7b;
+}
+.arcade-btn.btn-a:active, .arcade-btn.btn-a.active {
+  background: #e50914;
+}
+.arcade-btn.btn-b {
+  background: radial-gradient(circle at 35% 35%, #ffb300, #e65100);
+  border: 3px solid #ffd54f;
+}
+.arcade-btn.btn-b:active, .arcade-btn.btn-b.active {
+  background: #ff6d00;
+}
+.btn-letter {
+  font-size: 20px;
+  line-height: 1;
+}
+.btn-tag {
+  font-size: 10px;
+  opacity: 0.9;
+  font-weight: normal;
+  margin-top: 1px;
+}
+.btn-label-outside {
+  font-size: 11px;
+  font-weight: 800;
+  color: #777;
+  letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   Embedded Game Boy Mode (When loaded inside Game Boy Frame)
+   ========================================================================== */
+body.embedded {
+  background: transparent;
+}
+body.embedded #console-wrapper {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+body.embedded #screen-section {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+}
+body.embedded #lcd-hud {
+  display: flex;
+  background: rgba(20, 20, 24, 0.9);
+  border: none;
+  border-radius: 0;
+  padding: 4px 8px;
+  font-size: 11px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+body.embedded #screen-bezel {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  aspect-ratio: auto;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+body.embedded canvas#gameCanvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+}
+body.embedded #gamepad-deck {
+  display: none !important;
+}
+
+/* Landscape Mode */
+@media (orientation: landscape) and (max-height: 520px) {
+  body:not(.embedded) #console-wrapper {
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 4px 14px;
+  }
+  body:not(.embedded) #screen-section {
+    max-width: min(86vh, 416px);
+  }
+  body:not(.embedded) #screen-bezel {
+    max-width: min(80vh, 416px);
+  }
+  body:not(.embedded) #gamepad-deck {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    padding: 0 24px;
+    pointer-events: none;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 18px;
+  }
+  body:not(.embedded) .system-row {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    pointer-events: auto;
+  }
+  body:not(.embedded) .main-controls-row {
+    width: 100%;
+    justify-content: space-between;
+    pointer-events: none;
+  }
+  body:not(.embedded) .dpad-touchzone, body:not(.embedded) .arcade-buttons-group {
+    pointer-events: auto;
+  }
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#0a0a0c">
+  <title>太空侵略者 1978 - 移动掌机版</title>
+  <link rel="stylesheet" href="css/invaders.css">
+</head>
+<body>
+
+  <div id="console-wrapper">
+    <!-- Top Screen Area -->
+    <div id="screen-section">
+      <div id="arcade-hud">
+        <div>SCORE <span class="hud-val" id="hudScore">0</span></div>
+        <div>LIVES <span class="hud-val" id="hudLives">3</span></div>
+        <div>WAVE <span class="hud-val" id="hudWave">1</span></div>
+        <div>HI <span class="hud-ufo" id="hudHi">0</span></div>
+      </div>
+      <div id="screen-bezel">
+        <canvas id="invadersCanvas" width="320" height="400"></canvas>
+      </div>
+    </div>
+
+    <!-- Handheld Controller Deck (Shown when playing standalone) -->
+    <div id="gamepad-deck">
+      <!-- System Bar -->
+      <div class="system-row">
+        <button class="pill-btn" id="btn-sound">🔊 声音</button>
+        <button class="pill-btn" id="btn-pause">⏸ 暂停</button>
+        <button class="pill-btn" id="btn-fullscreen">⛶ 全屏</button>
+        <button class="pill-btn" id="btn-restart">🔄 重开</button>
+      </div>
+
+      <!-- Controls Row: Direction on Left, Fire on Right -->
+      <div class="main-controls-row">
+        <!-- Left / Right Navigation -->
+        <div class="nav-buttons-group">
+          <div class="nav-btn" id="btn-left">◀</div>
+          <div class="nav-btn" id="btn-right">▶</div>
+        </div>
+
+        <!-- Arcade Fire Buttons -->
+        <div class="arcade-buttons-group">
+          <!-- B Button: Turbo Rapid Fire -->
+          <div class="arcade-btn-wrapper">
+            <div class="arcade-btn btn-turbo" id="btn-turbo">
+              <span class="btn-letter">B</span>
+              <span class="btn-tag">极速</span>
+            </div>
+            <span class="btn-label-outside">连发</span>
+          </div>
+
+          <!-- A Button: Single Shot -->
+          <div class="arcade-btn-wrapper">
+            <div class="arcade-btn btn-fire" id="btn-fire">
+              <span class="btn-letter">A</span>
+              <span class="btn-tag">激光</span>
+            </div>
+            <span class="btn-label-outside">主炮</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modular Scripts -->
+  <script src="js/audio.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/shields.js"></script>
+  <script src="js/invaders.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

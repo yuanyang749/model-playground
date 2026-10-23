@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#0a0a0c">
+  <title>俄罗斯方块 1989 - Game Boy 经典掌机版</title>
+  <link rel="stylesheet" href="css/tetris.css">
+  <script>
+    // Automatically detect iframe embedding
+    if (window !== window.parent || window.location.search.includes('embedded=1')) {
+      document.documentElement.classList.add('embedded');
+      window.addEventListener('DOMContentLoaded', () => {
+        document.body.classList.add('embedded');
+      });
+    }
+  </script>
+</head>
+<body>
+
+  <div id="console-wrapper">
+    <!-- Top Screen Area -->
+    <div id="screen-section">
+      <div id="screen-bezel">
+        <canvas id="tetrisCanvas" width="360" height="400"></canvas>
+      </div>
+    </div>
+
+    <!-- Standheld Controller Deck (Shown only when playing directly outside Game Boy shell) -->
+    <div id="gamepad-deck">
+      <!-- System Bar -->
+      <div class="system-row">
+        <button class="pill-btn" id="btn-sound">🔊 音乐</button>
+        <button class="pill-btn" id="btn-pause">⏸ 暂停</button>
+        <button class="pill-btn" id="btn-restart">🔄 重开</button>
+      </div>
+
+      <!-- Controls Row: Direction on Left, Fire/Rotate on Right -->
+      <div class="main-controls-row">
+        <!-- D-Pad -->
+        <div class="dpad-cross">
+          <div class="dpad-btn up" id="btn-hard-drop" title="硬降落 (Hard Drop)">▲</div>
+          <div class="dpad-btn left" id="btn-left">◀</div>
+          <div class="dpad-btn down" id="btn-down">▼</div>
+          <div class="dpad-btn right" id="btn-right">▶</div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons-group">
+          <!-- B Button: CCW Rotate -->
+          <div class="action-btn-wrapper">
+            <div class="action-btn" id="btn-rot-ccw">B</div>
+            <span class="action-label">逆时针</span>
+          </div>
+
+          <!-- A Button: CW Rotate -->
+          <div class="action-btn-wrapper">
+            <div class="action-btn" id="btn-rot-cw">A</div>
+            <span class="action-label">顺时针</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modular Game Scripts -->
+  <script src="js/audio.js"></script>
+  <script src="js/board.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Retro Game Boy Composite Showcase Cover (1440x900)</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      width: 1440px;
+      height: 900px;
+      overflow: hidden;
+      background-color: #0b0c13;
+      background-image: 
+        radial-gradient(circle at 50% 50%, #171a26 0%, #0c0e16 55%, #06070a 100%),
+        radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+      background-size: 100% 100%, 28px 28px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", sans-serif;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+
+    /* Ambient Glows */
+    .glow-cyan {
+      position: absolute;
+      top: 15%;
+      left: 10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(0, 229, 255, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+      filter: blur(40px);
+    }
+
+    .glow-magenta {
+      position: absolute;
+      top: 20%;
+      right: 10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255, 30, 120, 0.11) 0%, transparent 70%);
+      pointer-events: none;
+      filter: blur(40px);
+    }
+
+    .glow-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 650px;
+      height: 750px;
+      background: radial-gradient(ellipse at center, rgba(140, 160, 255, 0.08) 0%, transparent 65%);
+      pointer-events: none;
+      filter: blur(30px);
+    }
+
+    /* Header Tech Bar */
+    .top-bar {
+      position: absolute;
+      top: 24px;
+      left: 48px;
+      right: 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 50;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 12px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-pill {
+      background: rgba(0, 229, 255, 0.12);
+      border: 1px solid rgba(0, 229, 255, 0.35);
+      color: #00e5ff;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .brand-title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: rgba(255, 255, 255, 0.85);
+      text-transform: uppercase;
+    }
+
+    .top-specs {
+      display: flex;
+      gap: 20px;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.5);
+      letter-spacing: 0.8px;
+      font-family: "SF Mono", Monaco, "Courier New", monospace;
+    }
+
+    .top-specs span {
+      color: #ffd454;
+      font-weight: bold;
+    }
+
+    /* Bottom Info Bar */
+    .bottom-bar {
+      position: absolute;
+      bottom: 22px;
+      left: 48px;
+      right: 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 50;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 10px;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.45);
+      letter-spacing: 1px;
+      font-family: "SF Mono", Monaco, "Courier New", monospace;
+    }
+
+    .bottom-bar strong {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    /* Main Showcase Stage */
+    .showcase-stage {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 56px 48px 46px 48px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Left & Right Card Columns */
+    .side-column {
+      width: 440px;
+      height: 720px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      position: relative;
+    }
+
+    .side-column.left {
+      align-items: flex-start;
+    }
+
+    .side-column.right {
+      align-items: flex-end;
+    }
+
+    /* Floating Game Cards */
+    .game-card {
+      width: 420px;
+      background: rgba(18, 20, 30, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 
+        0 24px 50px rgba(0, 0, 0, 0.75),
+        0 2px 4px rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .card-squishy {
+      transform: rotate(-3deg) translateY(12px) translateX(10px);
+    }
+
+    .card-tank {
+      transform: rotate(2deg) translateY(-8px) translateX(20px);
+    }
+
+    .card-invaders {
+      transform: rotate(3deg) translateY(12px) translateX(-10px);
+    }
+
+    .card-tetris {
+      transform: rotate(-2deg) translateY(-8px) translateX(-20px);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .card-badge {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .badge-squishy {
+      background: rgba(255, 75, 114, 0.18);
+      border: 1px solid rgba(255, 75, 114, 0.45);
+      color: #ff6b8b;
+    }
+
+    .badge-tank {
+      background: rgba(255, 180, 0, 0.18);
+      border: 1px solid rgba(255, 180, 0, 0.45);
+      color: #ffd454;
+    }
+
+    .badge-invaders {
+      background: rgba(0, 229, 255, 0.18);
+      border: 1px solid rgba(0, 229, 255, 0.45);
+      color: #00e5ff;
+    }
+
+    .badge-tetris {
+      background: rgba(139, 172, 15, 0.22);
+      border: 1px solid rgba(139, 172, 15, 0.5);
+      color: #a4cc11;
+    }
+
+    .card-title-text {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.9);
+      letter-spacing: 0.5px;
+    }
+
+    .card-meta {
+      font-size: 9.5px;
+      color: rgba(255, 255, 255, 0.5);
+      font-family: "SF Mono", Monaco, monospace;
+    }
+
+    .card-image-wrap {
+      width: 100%;
+      height: 236px;
+      background: #000;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Center Hero Game Boy */
+    .hero-center {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 30;
+      margin: 0 -10px;
+    }
+
+    .chassis-shadow {
+      position: absolute;
+      width: 410px;
+      height: 80px;
+      bottom: -25px;
+      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 72%);
+      border-radius: 50%;
+      filter: blur(12px);
+      z-index: 20;
+    }
+
+    .gameboy-frame-container {
+      width: 406px;
+      height: 816px;
+      border-radius: 20px 20px 60px 20px;
+      box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.95),
+        0 10px 25px rgba(0, 0, 0, 0.8),
+        0 0 50px rgba(0, 229, 255, 0.12),
+        inset 0 2px 3px rgba(255, 255, 255, 0.4);
+      overflow: hidden;
+      position: relative;
+      border: 2px solid #b8b6a6;
+      background: #cfcdbe;
+    }
+
+    .gameboy-frame-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Glow fx -->
+  <div class="glow-cyan"></div>
+  <div class="glow-magenta"></div>
+  <div class="glow-center"></div>
+
+  <!-- Top Tech Bar -->
+  <header class="top-bar">
+    <div class="brand-group">
+      <span class="brand-pill">Nintendo DMG-01</span>
+      <span class="brand-title">Antigravity Retro Game Boy Console</span>
+    </div>
+    <div class="top-specs">
+      <div>CARTRIDGES: <span>4-IN-1 MULTI-CART</span></div>
+      <div>DISPLAY: <span>ORIGINAL COLOR & DMG LCD</span></div>
+      <div>CORE: <span>VECTOR DECOUPLING 60FPS</span></div>
+    </div>
+  </header>
+
+  <!-- Main 3-Column Showcase Stage -->
+  <main class="showcase-stage">
+
+    <!-- Left Column: Squishy Buddies & Tank Battle -->
+    <div class="side-column left">
+      <!-- Card 1: Squishy Buddies -->
+      <div class="game-card card-squishy">
+        <div class="card-header">
+          <span class="card-badge badge-squishy">🫧 软乎乎大冒险 2006</span>
+          <span class="card-meta">ROOM 1: 初遇彩虹</span>
+        </div>
+        <div class="card-image-wrap">
+          <img src="../assets/gameboy-previews/squishy.png" alt="软乎乎大冒险 实机游玩画面" />
+        </div>
+      </div>
+
+      <!-- Card 2: Tank Battle -->
+      <div class="game-card card-tank">
+        <div class="card-header">
+          <span class="card-badge badge-tank">🎮 像素坦克大战 1990</span>
+          <span class="card-meta">STAGE 1: 经典平原</span>
+        </div>
+        <div class="card-image-wrap">
+          <img src="../assets/gameboy-previews/tank.png" alt="像素坦克大战 1990 实机交火画面" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Center Column: Authentic Hero Game Boy Console -->
+    <div class="hero-center">
+      <div class="gameboy-frame-container">
+        <iframe src="http://127.0.0.1:8766/retro-gameboy/index.html?game=squishy-buddies&autostart=1&action=bubble"></iframe>
+      </div>
+      <div class="chassis-shadow"></div>
+    </div>
+
+    <!-- Right Column: Space Invaders & Tetris -->
+    <div class="side-column right">
+      <!-- Card 3: Space Invaders -->
+      <div class="game-card card-invaders">
+        <div class="card-header">
+          <span class="card-badge badge-invaders">👾 太空侵略者 1978</span>
+          <span class="card-meta">WAVE 1: 编队矩阵</span>
+        </div>
+        <div class="card-image-wrap">
+          <img src="../assets/gameboy-previews/invaders.png" alt="太空侵略者 1978 经典街机画面" />
+        </div>
+      </div>
+
+      <!-- Card 4: Tetris -->
+      <div class="game-card card-tetris">
+        <div class="card-header">
+          <span class="card-badge badge-tetris">🧱 俄罗斯方块 1989</span>
+          <span class="card-meta">DMG-01 液晶点阵消行</span>
+        </div>
+        <div class="card-image-wrap">
+          <img src="../assets/gameboy-previews/tetris.png" alt="俄罗斯方块 1989 DMG 实机画面" />
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Bottom Info Bar -->
+  <footer class="bottom-bar">
+    <div>AUTHENTIC DMG-01 PHYSICAL SIMULATION &bull; <strong>TOUCH SLIDE D-PAD</strong> &bull; <strong>TILTED A/B KEYS</strong></div>
+    <div>PURE CLIENT-SIDE ZERO-DEPENDENCY &bull; <strong>POWERED BY GOOGLE ANTIGRAVITY</strong></div>
+  </footer>
+
+</body>
+</html>

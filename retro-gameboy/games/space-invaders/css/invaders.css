@@ -1,0 +1,281 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+:root {
+  --primary: #00ff66;
+  --accent: #ff0055;
+  --ufo: #ff2255;
+  --shield: #00e5ff;
+  --body-bg: #0a0a0c;
+  --screen-bezel: #1e1e24;
+}
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  touch-action: none;
+  overscroll-behavior: none;
+  background: var(--body-bg);
+  color: #fff;
+  font-family: 'Courier New', Courier, monospace, -apple-system, sans-serif;
+}
+
+#console-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  padding: env(safe-area-inset-top, 6px) env(safe-area-inset-right, 12px) env(safe-area-inset-bottom, 12px) env(safe-area-inset-left, 12px);
+  box-sizing: border-box;
+}
+
+#screen-section {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Retro CRT HUD */
+#arcade-hud {
+  width: 100%;
+  background: var(--screen-bezel);
+  border: 3px solid #32323a;
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 900;
+  color: #aaa;
+  letter-spacing: 1px;
+}
+.hud-val {
+  color: var(--primary);
+  font-weight: bold;
+}
+.hud-ufo {
+  color: var(--ufo);
+}
+
+/* CRT Arcade Bezel */
+#screen-bezel {
+  width: 100%;
+  max-width: min(94vw, 48vh);
+  aspect-ratio: 3 / 4;
+  background: #000;
+  border: 3px solid #32323a;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.95), inset 0 0 12px rgba(0, 255, 100, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+canvas#invadersCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Standalone Controller Deck */
+#gamepad-deck {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  flex: 1;
+  min-height: 200px;
+  touch-action: none;
+}
+
+.system-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-top: 4px;
+}
+.pill-btn {
+  background: #24242c;
+  border: 1px solid #444;
+  color: #bbb;
+  padding: 5px 12px;
+  border-radius: 14px;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.6);
+  cursor: pointer;
+}
+.pill-btn:active, .pill-btn.active {
+  background: #444;
+  color: #fff;
+  transform: translateY(1px);
+}
+
+.main-controls-row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+}
+
+/* Left / Right Slider / Buttons */
+.nav-buttons-group {
+  display: flex;
+  gap: 12px;
+}
+.nav-btn {
+  width: 66px;
+  height: 66px;
+  background: #26262e;
+  border: 2px solid #444450;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+  cursor: pointer;
+  touch-action: none;
+}
+.nav-btn:active, .nav-btn.active {
+  background: #00e5ff;
+  color: #000;
+  border-color: #fff;
+  transform: scale(0.94);
+}
+
+/* Fire Buttons */
+.arcade-buttons-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transform: rotate(-10deg);
+}
+.arcade-btn-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.arcade-btn {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.7), inset 0 2px 4px rgba(255,255,255,0.4);
+  cursor: pointer;
+  touch-action: none;
+  font-weight: 900;
+  color: #fff;
+}
+.arcade-btn:active, .arcade-btn.active {
+  transform: scale(0.92) translateY(2px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.9);
+}
+.arcade-btn.btn-fire {
+  background: radial-gradient(circle at 35% 35%, #00ff88, #008f44);
+  border: 3px solid #55ffaa;
+  color: #002b11;
+}
+.arcade-btn.btn-fire:active, .arcade-btn.btn-fire.active {
+  background: #00ff66;
+}
+.arcade-btn.btn-turbo {
+  background: radial-gradient(circle at 35% 35%, #ff007f, #aa0044);
+  border: 3px solid #ff66aa;
+}
+.arcade-btn.btn-turbo:active, .arcade-btn.btn-turbo.active {
+  background: #ff0055;
+}
+.btn-letter {
+  font-size: 20px;
+  line-height: 1;
+}
+.btn-tag {
+  font-size: 10px;
+  opacity: 0.9;
+  font-weight: normal;
+  margin-top: 1px;
+}
+.btn-label-outside {
+  font-size: 11px;
+  font-weight: 800;
+  color: #777;
+  letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   Embedded Game Boy Mode (When loaded inside Game Boy frame)
+   ========================================================================== */
+body.embedded {
+  background: transparent;
+}
+body.embedded #console-wrapper {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+body.embedded #screen-section {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+}
+body.embedded #arcade-hud {
+  display: flex;
+  background: rgba(14, 14, 18, 0.92);
+  border: none;
+  border-radius: 0;
+  padding: 4px 8px;
+  font-size: 11px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+body.embedded #screen-bezel {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  aspect-ratio: auto;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+body.embedded canvas#invadersCanvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+}
+body.embedded #gamepad-deck {
+  display: none !important;
+}

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Antigravity Retro Game Boy Console - 掌机模拟器 | 模型演练场</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%2310131c'/%3E%3Crect x='2' y='1' width='12' height='14' rx='2' fill='%23d0d3d4'/%3E%3Crect x='4' y='3' width='8' height='6' rx='1' fill='%238bac0f'/%3E%3Ccircle cx='11' cy='11.5' r='1' fill='%23a51a44'/%3E%3Ccircle cx='9' cy='12.5' r='1' fill='%23a51a44'/%3E%3Crect x='4' y='11' width='2' height='2' fill='%23333'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/gameboy.css?v=20261022_10">
+</head>
+<body>
+
+  <!-- Game Boy DMG-01 Handheld Chassis -->
+  <div id="gameboy-chassis">
+    <!-- Top Shell Grooves -->
+    <div class="shell-groove-top"></div>
+
+    <!-- Screen Bezel Unit -->
+    <div id="screen-bezel-unit">
+      <div class="bezel-lines">
+        <div class="bezel-line-top"></div>
+        <div class="bezel-line-bottom"></div>
+        <div class="bezel-text">DOT MATRIX WITH STEREO SOUND</div>
+        <button id="in-game-menu-btn" class="bezel-menu-btn hidden" tabindex="-1" aria-label="返回掌机目录" title="返回游戏目录 (RESET)">◀ 复位 / 目录</button>
+      </div>
+
+      <div class="screen-housing">
+        <!-- LCD Screen Frame & Canvas/Iframe/Menu -->
+        <div id="gb-screen-frame" class="palette-true">
+          <div class="lcd-grid-overlay"></div>
+
+          <!-- Authentic Game Boy Multi-Cart Selection Menu (On-Screen List) -->
+          <div id="gb-menu-view" class="active">
+            <div class="menu-lcd-header">
+              <div class="menu-brand-header">★ ANTIGRAVITY ★</div>
+              <div class="menu-title-banner">GAME BOY MULTI-CART</div>
+              <div class="menu-pixel-hr"></div>
+            </div>
+
+            <div class="menu-game-list" id="menu-game-list">
+              <!-- Game 01: Tank Battle -->
+              <div class="menu-item active" data-index="0" data-game="tank-battle">
+                <span class="menu-cursor">▶</span>
+                <span class="menu-num">1.</span>
+                <div class="menu-text-wrap">
+                  <div class="menu-game-title">像素坦克大战 1990</div>
+                  <div class="menu-game-en">BATTLE CITY · 8-BIT TANK</div>
+                </div>
+                <span class="menu-tag">ROM 01</span>
+              </div>
+
+              <!-- Game 02: Space Invaders -->
+              <div class="menu-item" data-index="1" data-game="space-invaders">
+                <span class="menu-cursor">▶</span>
+                <span class="menu-num">2.</span>
+                <div class="menu-text-wrap">
+                  <div class="menu-game-title">太空侵略者 1978</div>
+                  <div class="menu-game-en">SPACE INVADERS · TAITO</div>
+                </div>
+                <span class="menu-tag">ROM 02</span>
+              </div>
+
+              <!-- Game 03: Tetris 1989 -->
+              <div class="menu-item" data-index="2" data-game="tetris">
+                <span class="menu-cursor">▶</span>
+                <span class="menu-num">3.</span>
+                <div class="menu-text-wrap">
+                  <div class="menu-game-title">俄罗斯方块 1989</div>
+                  <div class="menu-game-en">TETRIS · NINTENDO / ELORG</div>
+                </div>
+                <span class="menu-tag">ROM 03</span>
+              </div>
+
+              <!-- Game 04: Squishy Buddies 2006 -->
+              <div class="menu-item" data-index="3" data-game="squishy-buddies">
+                <span class="menu-cursor">▶</span>
+                <span class="menu-num">4.</span>
+                <div class="menu-text-wrap">
+                  <div class="menu-game-title">软乎乎大冒险 2006</div>
+                  <div class="menu-game-en">SQUISHY BUDDIES · 5 COLOR POP</div>
+                </div>
+                <span class="menu-tag">ROM 04</span>
+              </div>
+
+              <!-- Game 05: Geek Guide -->
+              <div class="menu-item" data-index="4" data-game="tutorial">
+                <span class="menu-cursor">▶</span>
+                <span class="menu-num">5.</span>
+                <div class="menu-text-wrap">
+                  <div class="menu-game-title">TERMUX 开发攻略</div>
+                  <div class="menu-game-en">SHIZUKU & MCP MANUAL</div>
+                </div>
+                <span class="menu-tag">DOC 05</span>
+              </div>
+            </div>
+
+            <!-- Authentic LCD Footer Guide -->
+            <div class="menu-lcd-footer">
+              <div class="menu-footer-hint">
+                <span><b class="key-pill">▲▼</b>选择</span>
+                <span><b class="key-pill">A/START</b>启动</span>
+                <span><b class="key-pill">SEL+STA</b>复位</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Game Iframe Screen -->
+          <iframe id="game-screen" src="" class="hidden"></iframe>
+
+          <!-- Powered Off Overlay -->
+          <div id="screen-off-overlay" class="hidden">
+            <span>POWER OFF</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Middle Console Branding -->
+    <div class="console-branding">
+      <div class="brand-left">
+        <span class="brand-name">Antigravity</span>
+        <span class="brand-sub">GAME BOY<span style="font-size:7px;vertical-align:super">TM</span></span>
+      </div>
+      <div class="brand-right">DMG-01</div>
+    </div>
+
+    <!-- Lower Handheld Controls Deck -->
+    <div id="lower-deck">
+      <div class="primary-controls-row">
+        <!-- Authentic Cross D-Pad with Slide Touch Support -->
+        <div class="dpad-container" id="gb-dpad">
+          <div class="dpad-well"></div>
+          <div class="dpad-cross">
+            <div class="dpad-btn up" id="dpad-up">▲</div>
+            <div class="dpad-btn down" id="dpad-down">▼</div>
+            <div class="dpad-btn left" id="dpad-left">◀</div>
+            <div class="dpad-btn right" id="dpad-right">▶</div>
+            <div class="dpad-center"></div>
+          </div>
+        </div>
+
+        <!-- Slanted Action A & B Buttons -->
+        <div class="ab-buttons-container">
+          <!-- B Button -->
+          <div class="ab-unit">
+            <div class="ab-btn" id="gb-btn-b"></div>
+            <span class="ab-label">B</span>
+          </div>
+          <!-- A Button -->
+          <div class="ab-unit">
+            <div class="ab-btn" id="gb-btn-a"></div>
+            <span class="ab-label">A</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pill Shaped Rubber SELECT & START Buttons & Speaker Grille Row -->
+      <div class="secondary-controls-row">
+        <div class="select-start-wrap">
+          <div class="select-start-row">
+            <div class="rubber-pill-unit">
+              <div class="rubber-pill-btn" id="gb-btn-select"></div>
+              <span class="rubber-label">SELECT</span>
+            </div>
+            <div class="rubber-pill-unit">
+              <div class="rubber-pill-btn" id="gb-btn-start"></div>
+              <span class="rubber-label">START</span>
+            </div>
+          </div>
+          <button type="button" class="reset-silk-screen" id="gb-btn-reset" tabindex="-1" aria-label="复位键" title="复位回到游戏菜单 (RESET)">◀ RESET: SELECT + START ▶</button>
+        </div>
+
+        <!-- Speaker Grille Slits (Bottom Right) -->
+        <div class="speaker-grille">
+          <div class="speaker-slit"></div>
+          <div class="speaker-slit"></div>
+          <div class="speaker-slit"></div>
+          <div class="speaker-slit"></div>
+          <div class="speaker-slit"></div>
+          <div class="speaker-slit"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Boy Chassis Hardware Utility Dock (3 Authentic SVG Operations) -->
+    <div class="console-utility-dock">
+      <!-- 1. Power Switch / Button -->
+      <button class="utility-btn active" id="btn-power" tabindex="-1" aria-label="电源开关" title="电源开关 (POWER)">
+        <div class="btn-cap">
+          <svg class="utility-svg" viewBox="0 0 24 24">
+            <path d="M12 2v10"/>
+            <path d="M18.36 6.64a9 9 0 1 1-12.73 0"/>
+          </svg>
+        </div>
+        <span class="btn-label">POWER</span>
+      </button>
+
+      <!-- 2. Palette Mode Switcher -->
+      <button class="utility-btn true-color-active" id="btn-palette" tabindex="-1" aria-label="色彩调色板" title="色彩模式切换：原彩(无条纹) / COLOR(扫描线) / DMG / B&W">
+        <div class="btn-cap">
+          <svg class="utility-svg" viewBox="0 0 24 24">
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.9 0 1.6-.7 1.6-1.6 0-.4-.2-.8-.5-1.1-.3-.3-.4-.7-.4-1.1 0-.9.7-1.6 1.6-1.6H16c3.3 0 6-2.7 6-6 0-5.5-4.5-9.8-10-9.8z"/>
+            <circle cx="7.5" cy="10.5" r="1.5" fill="currentColor"/>
+            <circle cx="12" cy="7.5" r="1.5" fill="currentColor"/>
+            <circle cx="16.5" cy="10.5" r="1.5" fill="currentColor"/>
+          </svg>
+        </div>
+        <span class="btn-label" id="palette-label">原彩</span>
+      </button>
+
+      <!-- 3. Fullscreen Toggle -->
+      <button class="utility-btn" id="btn-fullscreen" tabindex="-1" aria-label="全屏显示" title="全屏切换 (FULLSCREEN)">
+        <div class="btn-cap">
+          <svg class="utility-svg" viewBox="0 0 24 24">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+          </svg>
+        </div>
+        <span class="btn-label">FULLSCREEN</span>
+      </button>
+
+      <!-- 4. Back to Playground Home -->
+      <a class="utility-btn" id="btn-back-home" href="../" tabindex="-1" aria-label="返回演练场" title="返回模型演练场 (HOME)" style="text-decoration:none;">
+        <div class="btn-cap">
+          <svg class="utility-svg" viewBox="0 0 24 24">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <span class="btn-label">HOME</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Console Engine Script -->
+  <script src="js/console.js?v=20261022_10"></script>
+</body>
+</html>

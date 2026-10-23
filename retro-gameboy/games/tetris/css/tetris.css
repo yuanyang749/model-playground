@@ -1,0 +1,219 @@
+/* ==========================================================================
+   Tetris 1989 - Mobile-First Retro Game Boy Stylesheet
+   ========================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #0a0a0c;
+  font-family: 'Courier New', Courier, monospace;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  touch-action: none;
+}
+
+#console-wrapper {
+  width: 100%;
+  max-width: 480px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background: #121318;
+}
+
+/* Screen Section */
+#screen-section {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+}
+
+#screen-bezel {
+  background: #0f380f;
+  border-radius: 8px;
+  padding: 6px;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8), 0 4px 12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+}
+
+canvas#tetrisCanvas {
+  display: block;
+  width: 360px;
+  height: 400px;
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  background-color: #9bbc0f;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  border-radius: 4px;
+}
+
+/* Standalone Gamepad Deck (Shown only when opened directly outside Game Boy shell) */
+#gamepad-deck {
+  width: 100%;
+  padding: 10px 16px 24px;
+  background: #181a22;
+  border-top: 2px solid #2a2d3d;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* If embedded inside Game Boy Console iframe, hide standalone controller deck */
+body.embedded #gamepad-deck,
+body[data-embedded="1"] #gamepad-deck {
+  display: none !important;
+}
+
+body.embedded #screen-section,
+body[data-embedded="1"] #screen-section {
+  padding: 0 !important;
+  height: 100% !important;
+  justify-content: center !important;
+}
+
+body.embedded #screen-bezel,
+body[data-embedded="1"] #screen-bezel {
+  padding: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+body.embedded canvas#tetrisCanvas,
+body[data-embedded="1"] canvas#tetrisCanvas {
+  width: 100vw !important;
+  height: 100vh !important;
+  max-height: 100% !important;
+  border-radius: 0 !important;
+}
+
+/* System Bar */
+.system-row {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.pill-btn {
+  background: #252836;
+  border: 1px solid #3c4056;
+  color: #a0a6c2;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 6px 14px;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.pill-btn:active {
+  background: #3c4056;
+  color: #fff;
+  transform: translateY(1px);
+}
+
+/* Main Controls Row */
+.main-controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 10px;
+}
+
+/* Direction D-Pad */
+.dpad-cross {
+  display: grid;
+  grid-template-columns: repeat(3, 46px);
+  grid-template-rows: repeat(3, 46px);
+  gap: 2px;
+}
+
+.dpad-btn {
+  background: #282a36;
+  color: #7b819a;
+  border: 1px solid #3e4256;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+.dpad-btn:active {
+  background: #44475a;
+  color: #50fa7b;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  transform: translateY(1px);
+}
+
+.dpad-btn.up { grid-column: 2; grid-row: 1; }
+.dpad-btn.left { grid-column: 1; grid-row: 2; }
+.dpad-btn.down { grid-column: 2; grid-row: 3; }
+.dpad-btn.right { grid-column: 3; grid-row: 2; }
+
+/* Action Buttons (A: Rotate CW, B: Rotate CCW) */
+.action-buttons-group {
+  display: flex;
+  gap: 16px;
+  transform: rotate(-15deg);
+}
+
+.action-btn-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.action-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #a81c4a, #801438);
+  border: 2px solid #5a0c25;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5), inset 0 2px 2px rgba(255, 255, 255, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.action-btn:active {
+  transform: scale(0.94);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.action-label {
+  margin-top: 4px;
+  font-size: 10px;
+  color: #8b92b2;
+}

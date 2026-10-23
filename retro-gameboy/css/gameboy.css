@@ -1,0 +1,765 @@
+/* ==========================================================================
+   Antigravity Game Boy (DMG-01) Retro Console Styling
+   Mobile-First Handheld Simulator Architecture
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+:root {
+  --gb-shell: #cfcdbe;
+  --gb-shell-shadow: #b2b0a0;
+  --gb-shell-highlight: #e4e2d4;
+  --gb-bezel: #6e707d;
+  --gb-bezel-inner: #50525d;
+  --gb-screen-dmg: #8bac0f;
+  --gb-screen-dmg-dark: #0f380f;
+  --gb-button-ab: #8f1947;
+  --gb-button-ab-active: #b5225c;
+  --gb-dpad: #2b2b2d;
+  --gb-rubber: #7c7e88;
+  --gb-accent-purple: #86184a;
+  --gb-accent-blue: #002e7a;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #101014;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", sans-serif;
+  touch-action: none;
+  overscroll-behavior: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ================= Console Utility Dock (3 Authentic SVG Operations) ================= */
+.console-utility-dock {
+  width: 100%;
+  max-width: 388px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5px 12px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 18px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.18), 0 1px 1px var(--gb-shell-highlight);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  margin-top: 3px;
+  z-index: 50;
+}
+
+.utility-btn {
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  padding: 2px 6px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  outline: none;
+}
+
+.btn-cap {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #767886 0%, #464854 85%);
+  border: 1.5px solid #363842;
+  box-shadow: 
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.35),
+    0 3px 5px rgba(0, 0, 0, 0.35),
+    0 1px 1px rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c8cad4;
+  transition: all 0.15s ease;
+}
+
+.utility-svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Active / Pressed States */
+.utility-btn:active .btn-cap,
+.utility-btn.active .btn-cap {
+  background: radial-gradient(circle at 35% 35%, #3c3e48 0%, #25262e 85%);
+  transform: translateY(1.5px) scale(0.96);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.7), 0 1px 1px rgba(255, 255, 255, 0.2);
+  color: #00e5ff;
+}
+
+/* Power button active powered-on state */
+.utility-btn#btn-power.active .btn-cap {
+  color: #ff3344;
+  border-color: #8f1947;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.4), 0 0 8px rgba(255, 51, 68, 0.35);
+}
+
+/* True-Color (原彩) active indicator on palette button */
+.utility-btn#btn-palette.true-color-active .btn-cap {
+  color: #ffd454;
+  border-color: #5c4e28;
+  box-shadow: inset 0 1.5px 2px rgba(255, 255, 255, 0.4), 0 3px 5px rgba(0, 0, 0, 0.35), 0 0 6px rgba(255, 212, 84, 0.28);
+}
+
+/* Text Labels matching Game Boy DMG-01 Silk-screened styling */
+.btn-label {
+  font-size: 7.5px;
+  font-weight: 900;
+  color: var(--gb-accent-blue);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ================= Game Boy Shell Container ================= */
+#gameboy-chassis {
+  width: 100vw;
+  max-width: 416px;
+  height: 98vh;
+  height: 98dvh;
+  max-height: 840px;
+  background: var(--gb-shell);
+  border-radius: 20px 20px 60px 20px; /* Authentic DMG-01 curved bottom-right! */
+  box-shadow: 
+    inset 0 4px 6px var(--gb-shell-highlight),
+    inset -4px -4px 8px var(--gb-shell-shadow),
+    0 16px 36px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px 10px 12px;
+  position: relative;
+  border: 2px solid #b8b6a6;
+  margin-top: 0;
+}
+
+/* Authentic Top Ribs / Ridges */
+.shell-groove-top {
+  position: absolute;
+  top: 0;
+  left: 24px;
+  right: 24px;
+  height: 4px;
+  background: var(--gb-shell-shadow);
+  border-radius: 0 0 4px 4px;
+}
+
+/* ================= Screen Bezel ================= */
+#screen-bezel-unit {
+  width: 100%;
+  max-width: 396px;
+  background: var(--gb-bezel);
+  border-radius: 12px 12px 38px 12px;
+  padding: 6px 10px 10px 10px;
+  box-shadow: inset 0 3px 6px #41434c, 0 3px 6px rgba(0,0,0,0.3);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Dual Color Accent Lines */
+.bezel-lines {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 6px;
+  position: relative;
+}
+.bezel-line-top {
+  width: 100%;
+  height: 3px;
+  background: var(--gb-accent-purple);
+  border-radius: 2px;
+}
+.bezel-line-bottom {
+  width: 100%;
+  height: 2px;
+  background: var(--gb-accent-blue);
+  border-radius: 2px;
+}
+.bezel-text {
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gb-bezel);
+  padding: 0 8px;
+  font-size: 8.5px;
+  font-style: italic;
+  font-weight: 900;
+  color: #c0c2cc;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* Screen Area with Battery LED */
+.screen-housing {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Actual LCD Frame - Enlarged & Centered */
+#gb-screen-frame {
+  width: 100%;
+  max-width: 356px;
+  height: clamp(260px, 39vh, 335px);
+  aspect-ratio: auto;
+  background: #000;
+  border-radius: 4px;
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.95), 0 2px 5px rgba(0,0,0,0.5);
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid #282a32;
+}
+
+/* CRT / LCD Matrix Tint Filter */
+#gb-screen-frame.palette-dmg {
+  filter: sepia(0.8) hue-rotate(55deg) saturate(2.4) brightness(0.9);
+}
+#gb-screen-frame.palette-bw {
+  filter: grayscale(1) contrast(1.15) brightness(1.05);
+}
+#gb-screen-frame.palette-color {
+  filter: none;
+}
+#gb-screen-frame.palette-true {
+  filter: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+#gb-screen-frame.palette-true .lcd-grid-overlay {
+  display: none;
+  opacity: 0;
+}
+
+/* Scanline / Pixel Grid Overlay */
+.lcd-grid-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15) 0px,
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  z-index: 5;
+}
+
+/* Game Iframe */
+iframe#game-screen {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background: #000;
+}
+
+/* Powered off screen state */
+#screen-off-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0d120d;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #2e442e;
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: bold;
+}
+#screen-off-overlay.hidden {
+  display: none;
+}
+
+/* ================= Middle Console Branding ================= */
+.console-branding {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 18px 0 18px;
+}
+.brand-left {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+.brand-name {
+  font-size: 13px;
+  font-weight: 900;
+  font-style: italic;
+  color: var(--gb-accent-blue);
+  letter-spacing: 0.5px;
+}
+.brand-sub {
+  font-size: 11px;
+  font-weight: 900;
+  color: var(--gb-accent-purple);
+  letter-spacing: 0.8px;
+}
+.brand-right {
+  font-size: 9px;
+  font-weight: 800;
+  color: #7b796d;
+  border: 1px solid #a3a193;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+/* ================= Lower Controls Deck ================= */
+#lower-deck {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  flex: 1;
+  min-height: 180px;
+  max-height: 250px;
+  position: relative;
+  padding: 2px 0;
+}
+
+/* Middle Primary Controls: D-Pad on Left, A/B on Right */
+.primary-controls-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+}
+
+/* Tactile DMG-01 D-Pad */
+.dpad-container {
+  width: 138px;
+  height: 138px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+}
+.dpad-well {
+  position: absolute;
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #b8b6a7 0%, #a4a293 85%);
+  box-shadow: inset 0 3px 6px rgba(0,0,0,0.4), 0 2px 4px var(--gb-shell-highlight);
+}
+.dpad-cross {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+}
+.dpad-btn {
+  position: absolute;
+  background: var(--gb-dpad);
+  border: 2px solid #3c3c40;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: inset 0 2px 2px #505058, 0 3px 5px rgba(0,0,0,0.5);
+}
+.dpad-btn.active {
+  background: #111;
+  color: #fff;
+  transform: scale(0.96);
+  box-shadow: inset 0 3px 5px #000;
+}
+.dpad-btn.up {
+  top: 0; left: 37px; width: 36px; height: 40px; border-bottom: none; border-radius: 6px 6px 0 0;
+}
+.dpad-btn.down {
+  bottom: 0; left: 37px; width: 36px; height: 40px; border-top: none; border-radius: 0 0 6px 6px;
+}
+.dpad-btn.left {
+  top: 37px; left: 0; width: 40px; height: 36px; border-right: none; border-radius: 6px 0 0 6px;
+}
+.dpad-btn.right {
+  top: 37px; right: 0; width: 40px; height: 36px; border-left: none; border-radius: 0 6px 6px 0;
+}
+.dpad-center {
+  top: 37px; left: 37px; width: 36px; height: 36px;
+  position: absolute;
+  background: #252528;
+  border-radius: 50%;
+  box-shadow: inset 0 0 6px #000;
+  pointer-events: none;
+}
+
+/* Iconic Slanted A & B Action Buttons */
+.ab-buttons-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transform: rotate(-25deg); /* Classic DMG-01 angle! */
+  padding: 8px 12px;
+  background: rgba(0,0,0,0.04);
+  border-radius: 36px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+}
+.ab-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.ab-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #a5184a, var(--gb-button-ab));
+  border: 2px solid #5a0928;
+  box-shadow: 
+    inset 0 3px 4px rgba(255, 255, 255, 0.4),
+    0 5px 10px rgba(0, 0, 0, 0.5),
+    0 1px 2px #fff;
+  cursor: pointer;
+  touch-action: none;
+}
+.ab-btn:active, .ab-btn.active {
+  background: var(--gb-button-ab-active);
+  transform: scale(0.92) translateY(2px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+}
+.ab-label {
+  font-size: 11px;
+  font-weight: 900;
+  color: var(--gb-accent-blue);
+  letter-spacing: 0.5px;
+  transform: rotate(25deg); /* Counter-rotate label so it reads upright! */
+}
+
+/* Secondary Controls Row (SELECT/START & Speaker Grille) */
+.secondary-controls-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px 0 28px;
+}
+
+.select-start-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+/* Rubber Pill SELECT & START Buttons */
+.select-start-row {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.rubber-pill-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 6px;
+  cursor: pointer;
+  transform: rotate(-25deg);
+}
+.rubber-pill-btn {
+  width: 44px;
+  height: 16px;
+  background: var(--gb-rubber);
+  border-radius: 8px;
+  border: 1px solid #565860;
+  box-shadow: inset 0 2px 2px #989aa6, 0 3px 5px rgba(0,0,0,0.4);
+  cursor: pointer;
+  touch-action: none;
+}
+.rubber-pill-btn:active, .rubber-pill-btn.active {
+  background: #464850;
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+.rubber-label {
+  font-size: 9px;
+  font-weight: 900;
+  color: var(--gb-accent-blue);
+  letter-spacing: 0.5px;
+  pointer-events: none;
+}
+.reset-silk-screen {
+  font-family: inherit;
+  font-size: 8px;
+  font-weight: 900;
+  color: #636674;
+  letter-spacing: 0.6px;
+  margin-top: 8px;
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(80, 84, 100, 0.22);
+  border-radius: 4px;
+  padding: 4px 10px;
+  cursor: pointer;
+  touch-action: manipulation;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+.reset-silk-screen:hover, .reset-silk-screen:active {
+  background: #252834;
+  color: #00e5ff;
+  border-color: #00e5ff;
+  transform: translateY(1px) scale(0.97);
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.4), inset 0 1px 2px #000;
+}
+
+/* Speaker Grille Slits (Bottom Right of Controls Deck) */
+.speaker-grille {
+  display: flex;
+  gap: 5px;
+  transform: rotate(-28deg);
+  pointer-events: none;
+  margin-right: 8px;
+}
+.speaker-slit {
+  width: 5px;
+  height: 32px;
+  background: #1c1c20;
+  border-radius: 4px;
+  box-shadow: inset 0 2px 3px #000, 0 1px 1px var(--gb-shell-highlight);
+}
+
+/* ================= Authentic Game Boy LCD Menu Screen ================= */
+#gb-menu-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--gb-screen-dmg);
+  color: var(--gb-screen-dmg-dark);
+  font-family: "Courier New", Courier, monospace;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 6px 10px 4px 10px;
+  box-sizing: border-box;
+  z-index: 10;
+  user-select: none;
+  overflow: hidden;
+}
+#gb-menu-view.hidden {
+  display: none;
+}
+
+.menu-lcd-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  flex-shrink: 0;
+}
+.menu-brand-header {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--gb-screen-dmg-dark);
+}
+.menu-title-banner {
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  opacity: 0.85;
+}
+.menu-pixel-hr {
+  width: 100%;
+  height: 2px;
+  background: var(--gb-screen-dmg-dark);
+  margin-top: 2px;
+  margin-bottom: 2px;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.25);
+}
+
+.menu-game-list {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin: 2px 0;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.menu-game-list::-webkit-scrollbar {
+  display: none;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 7px;
+  border-radius: 4px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+  pointer-events: auto;
+  transition: all 0.1s ease;
+  flex-shrink: 0;
+}
+.menu-item.active {
+  background: var(--gb-screen-dmg-dark);
+  color: var(--gb-screen-dmg);
+  border-color: var(--gb-screen-dmg-dark);
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.4);
+}
+.menu-item:active {
+  transform: scale(0.98);
+}
+
+.menu-cursor {
+  font-size: 11px;
+  width: 10px;
+  text-align: center;
+  visibility: hidden;
+  font-weight: bold;
+}
+.menu-item.active .menu-cursor {
+  visibility: visible;
+  animation: cursorBlink 0.6s infinite alternate;
+}
+@keyframes cursorBlink {
+  0% { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+.menu-num {
+  font-size: 11.5px;
+  font-weight: 900;
+}
+.menu-text-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+}
+.menu-game-title {
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+.menu-game-en {
+  font-size: 7.5px;
+  font-weight: bold;
+  opacity: 0.8;
+  letter-spacing: 0.4px;
+}
+.menu-tag {
+  font-size: 7.5px;
+  font-weight: 900;
+  border: 1px solid currentColor;
+  padding: 1px 3px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.menu-lcd-footer {
+  flex-shrink: 0;
+  text-align: center;
+  border-top: 1px dashed var(--gb-screen-dmg-dark);
+  padding-top: 3px;
+  margin-top: 2px;
+}
+.menu-footer-hint {
+  font-size: 8px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.key-pill {
+  background: var(--gb-screen-dmg-dark);
+  color: var(--gb-screen-dmg);
+  padding: 1px 2px;
+  border-radius: 2px;
+  margin-right: 2px;
+  font-size: 7.5px;
+}
+
+/* In-Game Menu Return Hardware Button on Bezel */
+.bezel-menu-btn {
+  position: absolute;
+  right: 4px;
+  top: -3px;
+  background: #181a22;
+  color: #00e5ff;
+  border: 1.5px solid #00e5ff;
+  border-radius: 4px;
+  font-size: 9.5px;
+  font-weight: 900;
+  padding: 3px 9px;
+  min-height: 24px;
+  cursor: pointer;
+  z-index: 25;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.25), 0 0 8px rgba(0,229,255,0.35);
+  transition: all 0.15s ease;
+  user-select: none;
+  touch-action: manipulation;
+}
+.bezel-menu-btn:hover, .bezel-menu-btn:active {
+  background: #00e5ff;
+  color: #0c0e14;
+  border-color: #00e5ff;
+  transform: scale(0.95);
+  box-shadow: 0 0 12px rgba(0,229,255,0.7);
+}
+.bezel-menu-btn.hidden {
+  display: none;
+}

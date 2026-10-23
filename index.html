@@ -281,6 +281,10 @@
         color: var(--pink);
       }
 
+      .badge.gameboy {
+        color: #a4d334;
+      }
+
       .model-pill {
         display: inline-flex;
         align-items: center;
@@ -322,6 +326,23 @@
       .model-pill.gemini::before {
         background: var(--cyan);
         box-shadow: 0 0 6px var(--cyan);
+      }
+
+      .model-pill.antigravity {
+        background: rgba(10, 12, 18, 0.88);
+        border: 1px solid rgba(255, 112, 67, 0.75);
+        color: #ffccbc;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+      }
+
+      .model-pill.antigravity::before {
+        background: #ff5722;
+        box-shadow: 0 0 6px #ff5722;
+      }
+
+      .legend-dot.antigravity {
+        background: #ff5722;
+        box-shadow: 0 0 6px #ff5722;
       }
 
       .body {
@@ -422,6 +443,12 @@
         color: #d4f8ff;
       }
 
+      .card.gameboy-card:hover .cta {
+        background: rgba(164, 211, 52, 0.16);
+        border-color: rgba(164, 211, 52, 0.55);
+        color: #ebffad;
+      }
+
       footer {
         margin-top: 56px;
         padding-top: 24px;
@@ -464,6 +491,7 @@
           <div class="model-legend">
             <span class="legend-chip"><i class="legend-dot opus"></i>Claude Opus 5.5 (2)</span>
             <span class="legend-chip"><i class="legend-dot gemini"></i>Gemini 4 Argon (1)</span>
+            <span class="legend-chip"><i class="legend-dot antigravity"></i>Google Antigravity (1)</span>
           </div>
           <div class="header-links">
             <a class="x-link" href="https://x.com/Delroy715" target="_blank" rel="noopener">
@@ -582,6 +610,41 @@
             </div>
             <div class="cta">
               <span>立即开抢 · 祖孙合体</span>
+              <span>→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Project 4: Retro Game Boy Console -->
+        <a class="card gameboy-card" href="./retro-gameboy/">
+          <div class="preview">
+            <img src="./assets/retro-gameboy.png" alt="RETRO GAME BOY · 复古掌机模拟器 实机画面" loading="lazy" />
+            <div class="badge-row">
+              <span class="badge gameboy">DMG-01 Handheld</span>
+              <span class="model-pill antigravity">Google Antigravity</span>
+            </div>
+          </div>
+          <div class="body">
+            <div class="model-meta">
+              <span>创建模型：<strong>Google Antigravity</strong></span>
+              <span>复古掌机仿真系统</span>
+            </div>
+            <div class="title-row">
+              <h2>RETRO GAME BOY</h2>
+              <span class="zh">复古掌机模拟器</span>
+            </div>
+            <p class="desc">
+              纯前端驱动的任天堂初代 Game Boy (DMG-01) 经典仿真掌机系统。配备灰白机身、倾斜 A/B 键、滑动触控十字 D-Pad、3 种液晶调色板切换与开机 Chime 音效；完整内置《像素坦克大战 1990》、《太空侵略者 1978》、《俄罗斯方块 1989》与《软乎乎大冒险 2006》四大经典卡带。
+            </p>
+            <div class="tags">
+              <span class="tag">Game Boy DMG-01</span>
+              <span class="tag">多重液晶调色板 (DMG/原彩/BW)</span>
+              <span class="tag">8-Bit 芯片音效合成</span>
+              <span class="tag">无缝换卡调度系统</span>
+              <span class="tag">4 款经典像素游戏</span>
+            </div>
+            <div class="cta">
+              <span>开启掌机 · 插入卡带</span>
               <span>→</span>
             </div>
           </div>

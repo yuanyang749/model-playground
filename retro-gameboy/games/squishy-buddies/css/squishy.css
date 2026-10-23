@@ -1,0 +1,235 @@
+/* ==========================================================================
+   Squishy Buddies 2006 - Mobile-First Retro Game Boy Stylesheet
+   Chunky, Clean, High-Contrast Handheld Viewport
+   ========================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #0c0d12;
+  font-family: 'Courier New', Courier, monospace, sans-serif;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  touch-action: none;
+}
+
+#console-wrapper {
+  width: 100%;
+  max-width: 480px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background: #14161f;
+}
+
+/* Screen Section */
+#screen-section {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+  position: relative;
+}
+
+#screen-bezel {
+  background: #10121a;
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8), 0 4px 12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+}
+
+canvas#gameCanvas {
+  display: block;
+  width: 320px;
+  height: 240px;
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  background-color: #1a1e2e;
+  image-rendering: auto; /* vector art rendered on a hi-res back-buffer - keep it smooth & sharp */
+  border-radius: 4px;
+}
+
+/* Standalone Gamepad Deck (Shown only when opened directly outside Game Boy shell) */
+#gamepad-deck {
+  width: 100%;
+  padding: 10px 16px 24px;
+  background: #1a1c26;
+  border-top: 2px solid #2e3244;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* If embedded inside Game Boy Console iframe, hide standalone controller deck */
+body.embedded #gamepad-deck,
+body[data-embedded="1"] #gamepad-deck {
+  display: none !important;
+}
+
+body.embedded #console-wrapper,
+body[data-embedded="1"] #console-wrapper {
+  max-width: 100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: #0c0d12 !important;
+}
+
+body.embedded #screen-section,
+body[data-embedded="1"] #screen-section {
+  padding: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+body.embedded #screen-bezel,
+body[data-embedded="1"] #screen-bezel {
+  padding: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+body.embedded canvas#gameCanvas,
+body[data-embedded="1"] canvas#gameCanvas {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain;
+  border-radius: 0 !important;
+}
+
+/* Standalone Controller Buttons */
+.system-row {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.pill-btn {
+  background: #282c3c;
+  border: 1px solid #444a62;
+  color: #a6afce;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 6px 14px;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.pill-btn:active {
+  background: #444a62;
+  color: #fff;
+  transform: translateY(1px);
+}
+
+.main-controls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+}
+
+/* D-Pad */
+.dpad-cross {
+  position: relative;
+  width: 110px;
+  height: 110px;
+}
+
+.dpad-btn {
+  position: absolute;
+  background: #2d3142;
+  border: 2px solid #4f5572;
+  color: #c0c6e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 6px;
+  touch-action: manipulation;
+}
+
+.dpad-btn.up { top: 0; left: 37px; width: 36px; height: 36px; }
+.dpad-btn.down { bottom: 0; left: 37px; width: 36px; height: 36px; }
+.dpad-btn.left { top: 37px; left: 0; width: 36px; height: 36px; }
+.dpad-btn.right { top: 37px; right: 0; width: 36px; height: 36px; }
+
+.dpad-btn:active {
+  background: #4f5572;
+  color: #fff;
+}
+
+/* Action Buttons */
+.action-buttons-group {
+  display: flex;
+  gap: 16px;
+  transform: rotate(-16deg);
+}
+
+.action-btn-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.action-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ff4b72, #c0183e);
+  border: 2px solid #85102a;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 900;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.action-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.action-label {
+  font-size: 9px;
+  font-weight: bold;
+  color: #8f96b2;
+  letter-spacing: 0.5px;
+}

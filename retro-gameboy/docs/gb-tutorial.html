@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes, viewport-fit=cover">
+  <title>Game Boy 掌机电子手册 - Termux 智能体极客指南</title>
+  <style>
+    :root {
+      --bg: #0d120f;
+      --card-bg: #141c16;
+      --code-bg: #090e0b;
+      --border: #223326;
+      --border-accent: #2e4734;
+      --text: #cfded3;
+      --text-dim: #7f9485;
+      --dmg-green: #8bac0f;
+      --dmg-dark: #0f380f;
+      --accent-green: #4ade80;
+      --accent-cyan: #38bdf8;
+      --accent-amber: #fbbf24;
+      --accent-ruby: #fb7185;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      font-size: 11px;
+      line-height: 1.6;
+      padding: 8px 10px 48px 10px;
+      word-break: break-word;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    /* Floating / Sticky Quick Return Bar */
+    .gb-doc-reset-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      padding: 2px 0 6px 0;
+      background: linear-gradient(180deg, var(--bg) 85%, transparent 100%);
+    }
+    .doc-reset-pill {
+      background: #142318;
+      color: #4ade80;
+      border: 1px solid #4ade80;
+      border-radius: 12px;
+      font-size: 9.5px;
+      font-weight: 900;
+      padding: 4px 14px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      touch-action: manipulation;
+      transition: all 0.1s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .doc-reset-pill:active {
+      background: #4ade80;
+      color: #000;
+      transform: scale(0.95);
+    }
+
+    /* Game Boy DMG Cartridge Manual Header */
+    .gb-header-card {
+      background: linear-gradient(180deg, #132417 0%, #0d1810 100%);
+      border: 1.5px solid var(--dmg-green);
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-bottom: 8px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    }
+    .gb-header-meta {
+      font-size: 8px;
+      font-family: monospace;
+      color: var(--dmg-green);
+      letter-spacing: 1.5px;
+      font-weight: 900;
+    }
+    .gb-doc-title {
+      font-size: 13.5px;
+      font-weight: 900;
+      color: #fff;
+      margin: 3px 0 2px 0;
+      line-height: 1.35;
+      letter-spacing: 0.3px;
+    }
+    .gb-doc-subtitle {
+      font-size: 9px;
+      color: var(--text-dim);
+    }
+
+    /* Quick Chapter Navigation Pills */
+    .nav-scroll-bar {
+      display: flex;
+      overflow-x: auto;
+      gap: 5px;
+      padding: 2px 2px 8px 2px;
+      margin-bottom: 8px;
+      scrollbar-width: none;
+    }
+    .nav-scroll-bar::-webkit-scrollbar { display: none; }
+    .nav-pill {
+      background: var(--card-bg);
+      border: 1px solid var(--border-accent);
+      color: var(--accent-cyan);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 8.5px;
+      font-weight: 800;
+      white-space: nowrap;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .nav-pill:active {
+      background: var(--dmg-green);
+      color: #000;
+      border-color: #fff;
+    }
+
+    /* Compact Headings */
+    h2 {
+      font-size: 12px;
+      font-weight: 900;
+      color: #7ee787;
+      background: rgba(126, 231, 135, 0.08);
+      border-left: 3.5px solid #7ee787;
+      padding: 3px 8px;
+      margin: 14px 0 6px 0;
+      border-radius: 0 4px 4px 0;
+      line-height: 1.35;
+    }
+    h3 {
+      font-size: 11px;
+      font-weight: 800;
+      color: #ffd43b;
+      margin: 10px 0 4px 0;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+    h3::before {
+      content: "▸";
+      color: var(--dmg-green);
+      font-size: 10px;
+    }
+
+    p {
+      margin-bottom: 6px;
+      text-align: justify;
+    }
+
+    /* Cards & Containers */
+    .gb-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin: 6px 0;
+    }
+
+    /* Callouts & Alerts */
+    .callout {
+      border-left: 3px solid var(--accent-cyan);
+      background: rgba(56, 189, 248, 0.08);
+      border-radius: 0 5px 5px 0;
+      padding: 6px 8px;
+      margin: 6px 0;
+      font-size: 10px;
+    }
+    .callout.tip {
+      border-left-color: var(--accent-green);
+      background: rgba(74, 222, 128, 0.08);
+    }
+    .callout.warn {
+      border-left-color: var(--accent-amber);
+      background: rgba(251, 191, 36, 0.08);
+    }
+    .callout-title {
+      font-weight: 800;
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Code Blocks */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border-accent);
+      border-radius: 5px;
+      padding: 6px 8px;
+      overflow-x: auto;
+      margin: 6px 0;
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 9px;
+      line-height: 1.45;
+      color: #98e898;
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      background: rgba(255, 255, 255, 0.08);
+      color: #ff8b82;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-size: 9.5px;
+    }
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+
+    /* Key-Value Compact Grids (Replacing heavy tables) */
+    .kv-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px;
+      margin: 6px 0;
+    }
+    .kv-cell {
+      background: #0f1712;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 4px 6px;
+      font-size: 9.5px;
+    }
+    .kv-label {
+      font-weight: 800;
+      color: var(--dmg-green);
+      font-size: 8.5px;
+      text-transform: uppercase;
+    }
+    .kv-val {
+      color: #e2ede5;
+      margin-top: 1px;
+    }
+
+    /* Lists */
+    ul, ol {
+      margin: 4px 0 6px 14px;
+    }
+    li {
+      margin-bottom: 3px;
+    }
+
+    /* Badges & Tags */
+    .badge {
+      display: inline-block;
+      font-size: 8px;
+      font-weight: 800;
+      padding: 1px 5px;
+      border-radius: 3px;
+      background: var(--dmg-dark);
+      color: var(--dmg-green);
+      border: 1px solid var(--dmg-green);
+    }
+    .badge.red {
+      background: #381216;
+      color: #ff7b72;
+      border-color: #ff7b72;
+    }
+
+    /* Images */
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+      border: 1px solid var(--border-accent);
+      margin: 6px auto 2px auto;
+      display: block;
+    }
+    .caption {
+      font-size: 8px;
+      text-align: center;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+
+    /* Floating Game Boy Controls HUD Indicator */
+    .gb-controller-hud {
+      position: fixed;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(13, 22, 16, 0.92);
+      backdrop-filter: blur(4px);
+      border: 1px solid var(--dmg-green);
+      border-radius: 10px;
+      padding: 2px 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 7.5px;
+      font-family: monospace;
+      color: var(--dmg-green);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.8);
+      z-index: 100;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0.9;
+      transition: opacity 0.4s ease;
+    }
+    .gb-controller-hud span {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      white-space: nowrap;
+    }
+    .key-hint {
+      background: var(--dmg-green);
+      color: #000;
+      font-weight: 900;
+      padding: 1px 3px;
+      border-radius: 2px;
+      font-size: 7px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Quick Return to Game Boy Console Menu -->
+  <div class="gb-doc-reset-bar">
+    <button id="doc-btn-reset" class="doc-reset-pill" onclick="window.parent.postMessage({type:'GB_RESET'}, '*')">
+      ◀ 返回掌机主菜单 (RESET)
+    </button>
+  </div>
+
+  <!-- Game Boy DMG Manual Header -->
+  <div class="gb-header-card">
+    <div class="gb-header-meta">★ DMG-01 OFFICIAL USER MANUAL ★</div>
+    <div class="gb-doc-title">Android 本地运行 Antigravity 智能体全攻略</div>
+    <div class="gb-doc-subtitle">Termux 环境调优 · Shizuku 提权 · MT 管理器 MCP 实战</div>
+  </div>
+
+  <!-- Quick Chapter Navigation Pills -->
+  <div class="nav-scroll-bar" id="toc">
+    <a href="#ch-intro" class="nav-pill">⚡ 序言</a>
+    <a href="#ch-1" class="nav-pill">01. 基础环境</a>
+    <a href="#ch-2" class="nav-pill">02. Shizuku提权</a>
+    <a href="#ch-3" class="nav-pill">03. 自动化排障</a>
+    <a href="#ch-4" class="nav-pill">04. 掌机游戏合集</a>
+    <a href="#ch-5" class="nav-pill">05. MT/MCP工作台</a>
+    <a href="#ch-6" class="nav-pill">06. 极客清单</a>
+  </div>
+
+  <!-- Preface: Architecture -->
+  <section id="ch-intro">
+    <h2>序言：从“PC云端外包”到“口袋里的自主智能体”</h2>
+    <p>过去，软件工程默认绑定在厚重的 PC 电脑和复杂的桌面 IDE 之前；而今天，配备 12GB~24GB 内存的高通骁龙/天玑手机，已经具备了原生完整的 Linux 用户态运行环境（Termux AArch64）。</p>
+    <div class="callout tip">
+      <div class="callout-title">💡 手机本地闭环拓扑</div>
+      自然语言需求 ➔ Termux 内 Antigravity 智能体 ➔ 提权调用 Shizuku (<code>rish</code>) ➔ 本地 Web 守护 ➔ Android 宿主 Chrome 呈现 ➔ 截屏感知与自动化测试！
+    </div>
+  </section>
+
+  <!-- Chapter 1 -->
+  <section id="ch-1">
+    <h2>第 1 章：Android Termux 本地基石环境搭建</h2>
+    <h3>1.1 依赖安装与 AArch64 配置</h3>
+    <p>切勿使用 Google Play 商店版 Termux（已停更）。必须从 <a href="https://github.com/termux/termux-app/releases" style="color:var(--accent-cyan)">GitHub Releases</a> 下载最新的 <code>arm64-v8a</code> 版本。</p>
+    <pre><code># 1. 换源并升级基础包
+pkg update -y && pkg upgrade -y
+
+# 2. 安装核心套件
+pkg install -y nodejs-lts python git curl build-essential python-pillow
+
+# 3. 申请存储权限
+termux-setup-storage</code></pre>
+
+    <h3>1.2 Termux 黄金“避坑四准则”</h3>
+    <div class="kv-grid">
+      <div class="kv-cell">
+        <div class="kv-label">严禁 sudo</div>
+        <div class="kv-val">Termux 无 root，提权必须走 Shizuku 的 <code>rish</code> 工具。</div>
+      </div>
+      <div class="kv-cell">
+        <div class="kv-label">严禁 systemd</div>
+        <div class="kv-val">后台服务一律使用 <code>nohup</code> 或守护进程。</div>
+      </div>
+      <div class="kv-cell">
+        <div class="kv-label">严禁 PC 桌面音频</div>
+        <div class="kv-val">不可用 ALSA，音频一律调用 Web Audio API。</div>
+      </div>
+      <div class="kv-cell">
+        <div class="kv-label">严禁 apt-get / snap</div>
+        <div class="kv-val">包管理一律使用 <code>pkg install</code>。</div>
+      </div>
+    </div>
+
+    <h3>1.3 Antigravity CLI 安装与 PATH 避坑</h3>
+    <pre><code># 1. 一键安装
+curl -fsSL antigravity.google/cli/install.sh | bash
+
+# ⚠️ 关键避坑：Termux 默认 PATH 无 ~/.local/bin，需手动追加
+echo 'export PATH="/data/data/com.termux/files/home/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
+
+# 2. 启动智能体
+agy</code></pre>
+    <p>配置 <code>GEMINI.md</code>（放在 <code>~/.gemini/antigravity-cli/GEMINI.md</code>），让智能体时刻牢记自己运行在 Android 手机上，输出移动优先代码。</p>
+  </section>
+
+  <!-- Chapter 2 -->
+  <section id="ch-2">
+    <h2>第 2 章：突破沙盒瓶颈 —— Shizuku (`rish`) 提权指南</h2>
+    <h3>2.1 为什么 Termux 需要 Shizuku</h3>
+    <p>Termux 作为普通 App 沙盒，无法访问 <code>/sdcard/Android/data</code>，也无法截屏或模拟触控。Shizuku 基于 Android 系统级 ADB 提权，提供具备 <code>shell</code> 用户与 <code>ext_data_rw</code> 权限的 <code>rish</code> 终端通道！</p>
+
+    <h3>2.2 部署 rish 核心步骤</h3>
+    <ol>
+      <li>开启手机“开发者选项”与“无线调试”；</li>
+      <li>在 Shizuku App 中点击“配对”并启动服务；</li>
+      <li>在 Termux 中部署 <code>rish</code>：</li>
+    </ol>
+    <pre><code># 导出 rish 文件
+pkg install -y termux-tools
+# 赋予执行权限并测试
+chmod +x ~/bin/rish
+rish -c "id"
+# 输出 uid=2000(shell) 即提权成功！</code></pre>
+
+    <div class="callout warn">
+      <div class="callout-title">⚠️ Android 14 关键坑点</div>
+      Android 14 强化了子进程派生限制，在 Termux 运行 <code>rish</code> 前，确保在手机系统“应用详细信息”中允许 Termux 在后台无限制运行并关闭电池优化。
+    </div>
+  </section>
+
+  <!-- Chapter 3 -->
+  <section id="ch-3">
+    <h2>第 3 章：真机自动化与视觉排障全景对比</h2>
+    <div class="kv-grid">
+      <div class="kv-cell">
+        <div class="kv-label">方案 A: Termux:API</div>
+        <div class="kv-val">轻量获取电量/传感器，但无法截取系统屏幕。</div>
+      </div>
+      <div class="kv-cell">
+        <div class="kv-label">方案 B: Shizuku + rish (推荐)</div>
+        <div class="kv-val">极速截屏 (<code>screencap</code>) 与模拟点击 (<code>input tap</code>)。</div>
+      </div>
+    </div>
+    <div class="callout tip">
+      <div class="callout-title">📸 截屏黑屏故障复盘</div>
+      当手机锁屏时，Android SurfaceFlinger 会触发 <code>FLAG_SECURE</code> 保护机制，<code>screencap</code> 截出的文件仅 15KB 全黑。只有在屏幕解锁亮屏状态下，才能捕获真实绚丽色彩！
+    </div>
+  </section>
+
+  <!-- Chapter 4 -->
+  <section id="ch-4">
+    <h2>第 4 章：实战案例 —— 纯手机研发 Game Boy 掌机与多合一游戏合集</h2>
+    <h3>4.1 移动优先人体工学</h3>
+    <ul>
+      <li>触摸滑动式十字键：支持滑动中方向自由无缝切换；</li>
+      <li>防误触多指触控追踪：隔离 <code>activeTouchId</code>，绝不出现双手按键互相串号；</li>
+      <li>震动反馈（Haptic Feedback）：开火与撞击触发真实微震动。</li>
+    </ul>
+
+    <h3>4.2 向量解耦算法（防卡死死锁）</h3>
+    <p>当两辆坦克碰撞时，传统网格法会导致双方坐标重叠且无法向反方向移动（死锁）。我们引入向量解耦推离算法：</p>
+    <pre><code>// 向量解耦：计算两坦克中心向量并互相推离
+const dx = tankA.x - tankB.x;
+const dy = tankA.y - tankB.y;
+const dist = Math.hypot(dx, dy) || 1;
+const overlap = (tankA.size / 2 + tankB.size / 2) - dist;
+if (overlap > 0) {
+  tankA.x += (dx / dist) * (overlap / 2);
+  tankB.x -= (dx / dist) * (overlap / 2);
+}</code></pre>
+  </section>
+
+  <!-- Chapter 5 -->
+  <section id="ch-5">
+    <h2>第 5 章：联动 MT 管理器 MCP 服务打造掌上工作台</h2>
+    <h3>5.1 什么是 MT 管理器 MCP 服务</h3>
+    <p>MT 管理器作为 Android 上的逆向神器，最新版内置了 Model Context Protocol (MCP) 服务！</p>
+    <div class="callout tip">
+      <div class="callout-title">⚡ 同机回环直连的绝对优势</div>
+      智能体运行在 Termux，MT 管理器运行在同一台手机，通过 <code>http://127.0.0.1:8787/mcp</code> 本地回环直连，延迟低于 1ms，无公网泄露风险！
+    </div>
+
+    <h3>5.2 49 项逆向工具赋能六大场景</h3>
+    <ul>
+      <li><strong>APK 静态分析</strong>：查看清单、解析签名、检索方法交叉引用（XREF）；</li>
+      <li><strong>DEX 与字节码审查</strong>：反编译类轮廓，精准分析 Smali；</li>
+      <li><strong>Native SO 逆向</strong>：反汇编机器码，自动生成函数控制流图 (CFG)；</li>
+      <li><strong>自动化打补丁</strong>：内存机器指令 Patch、替换资源与重新打包签名。</li>
+    </ul>
+
+    <h3>5.3 配置模板与 Token 鉴权说明</h3>
+    <p>在 MT 管理器中开启 MCP 服务后，建议开启安全认证以防止本地恶意应用越权访问。将界面显示的端口（如 <code>8787</code>）与 Token 填入全局配置：</p>
+    <pre><code>{
+  "mcpServers": {
+    "mt-manager": {
+      "url": "http://127.0.0.1:8787/mcp",
+      "//_comment": "若在 MT 管理器开启了认证（推荐），需配置 headers",
+      "headers": {
+        "Authorization": "Bearer 您的MT_MCP_TOKEN"
+      }
+    }
+  }
+}</code></pre>
+  </section>
+
+  <!-- Chapter 6 -->
+  <section id="ch-6">
+    <h2>第 6 章：极客生产力 Checklist 清单</h2>
+    <div class="gb-card">
+      <ul>
+        <li><span class="badge">01</span> Termux 电源策略锁定为“无限制”；</li>
+        <li><span class="badge">02</span> 每次重启手机后，使用无线调试拉起 Shizuku；</li>
+        <li><span class="badge">03</span> 项目统一存放在 <code>~/projects/</code> 目录；</li>
+        <li><span class="badge">04</span> 成果自动同步至 <code>~/storage/downloads/</code>；</li>
+        <li><span class="badge">05</span> 运行自动化截图测试前，确保手机屏幕已点亮并解锁；</li>
+        <li><span class="badge">06</span> 遇到多指触控，务必绑定 <code>touch.identifier</code> 独立追踪！</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Floating HUD & Controller Bridge -->
+  <div class="gb-controller-hud">
+    <span><b class="key-hint">▲▼</b>行滚动</span>
+    <span><b class="key-hint">A/B</b>翻页</span>
+    <span><b class="key-hint">START</b>置顶</span>
+  </div>
+
+  <script>
+    // Floating HUD auto-fade management
+    const hud = document.querySelector('.gb-controller-hud');
+    let hudTimer = null;
+    function pingHud() {
+      if (!hud) return;
+      hud.style.opacity = '0.9';
+      clearTimeout(hudTimer);
+      hudTimer = setTimeout(() => {
+        hud.style.opacity = '0';
+      }, 3500);
+    }
+    pingHud();
+    window.addEventListener('scroll', pingHud, { passive: true });
+
+    // Game Boy Physical Hardware Bridging: Control Guide with D-Pad & A/B buttons!
+    window.addEventListener('message', (event) => {
+      if (!event.data || event.data.type !== 'GB_INPUT') return;
+      const { key, pressed } = event.data;
+      if (!pressed) return;
+      pingHud();
+
+      switch (key) {
+        case 'UP':
+          window.scrollBy({ top: -65, behavior: 'smooth' });
+          break;
+        case 'DOWN':
+          window.scrollBy({ top: 65, behavior: 'smooth' });
+          break;
+        case 'A':
+          // A button = Fast Page Down
+          window.scrollBy({ top: 200, behavior: 'smooth' });
+          break;
+        case 'B':
+          // B button = Fast Page Up
+          window.scrollBy({ top: -200, behavior: 'smooth' });
+          break;
+        case 'START':
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          break;
+        case 'SELECT':
+          const toc = document.getElementById('toc');
+          if (toc) toc.scrollIntoView({ behavior: 'smooth' });
+          break;
+      }
+    });
+  </script>
+</body>
+</html>

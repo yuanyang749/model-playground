@@ -14,6 +14,7 @@
 | **VOXEL STRIKE · 方块突击** | `Claude Opus 5.5` | 3D 体素第一人称波次生存射击游戏 | [立即游玩](https://yuanyang749.github.io/model-playground/voxel-strike/) |
 | **ORBITONE · 星轨** | `Claude Opus 5.5` | 开普勒行星轨道音乐盒与多音色合成器 | [立即体验](https://yuanyang749.github.io/model-playground/orbitone/) |
 | **隔代夺蛋：2026 \| Cyber Eggs** | `Gemini 4 Argon` | 双时空同屏微操街机爽游 | [立即开抢](https://yuanyang749.github.io/model-playground/cyber-eggs/) |
+| **RETRO GAME BOY · 掌机模拟器** | `Google Antigravity` | Game Boy (DMG-01) 经典掌机仿真系统与 4 合 1 经典游戏卡带 | [立即开机](https://yuanyang749.github.io/model-playground/retro-gameboy/) |
 
 ---
 
@@ -58,9 +59,28 @@
 
 ---
 
+## 4. RETRO GAME BOY · 掌机模拟器 (`./retro-gameboy`)
+> **创建模型**：`Google Antigravity`
+
+![RETRO GAME BOY](./assets/retro-gameboy.png)
+
+纯前端零依赖驱动的任天堂初代 **Game Boy (DMG-01)** 经典人机工学仿真掌机系统与多游戏运行环境。
+- **拟真人机工学机身与物理反馈**：经典灰白工程塑料质感外壳、屏幕边框双色饰线与点阵刻字、滑动触控十字 D-Pad、倾斜深酒红 A/B 键、震动反馈（Haptics）与开机“*ba-ding!*”晶体 Chime 音效。
+- **多重液晶调色板实时切换**：支持原彩街机画质（True Color）、经典橄榄绿液晶点阵（DMG）与高对比度 Pocket 黑白三种显示风格，一键无缝热切。
+- **内置 4 款经典卡带（4-in-1 Multi-Cart）**：
+  1. 🎮 **像素坦克大战 1990 (Battle City)**：经典 FC 坦克对战，独家搭载向量解耦碰撞解死锁物理算法（Vector Decoupling）；
+  2. 👾 **太空侵略者 1978 (Space Invaders)**：外星人编队矩阵、4 步步进低音加速曲、掩体像素级弹坑侵蚀物理与高空神秘飞碟；
+  3. 🧱 **俄罗斯方块 1989 (Tetris)**：经典七联方块下落、硬降/软降消除与阶段性变速机制；
+  4. 🫧 **软乎乎大冒险 2006 (Squishy Buddies)**：5 种果冻史莱姆切换、吐泡泡解谜与双 Boss 战。
+
+详见 [`retro-gameboy/README.md`](./retro-gameboy/README.md)。
+
+---
+
 ## 本地运行
 
 ```bash
 python3 -m http.server 8000
 # 浏览器打开 http://localhost:8000
 ```
+
