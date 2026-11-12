@@ -15,6 +15,7 @@
 | **ORBITONE · 星轨** | `Claude Opus 5.5` | 开普勒行星轨道音乐盒与多音色合成器 | [立即体验](https://yuanyang749.github.io/model-playground/orbitone/) |
 | **隔代夺蛋：2026 \| Cyber Eggs** | `Gemini 4 Argon` | 双时空同屏微操街机爽游 | [立即开抢](https://yuanyang749.github.io/model-playground/cyber-eggs/) |
 | **RETRO GAME BOY · 掌机模拟器** | `Google Antigravity` | Game Boy (DMG-01) 经典掌机仿真系统与 4 合 1 经典游戏卡带 | [立即开机](https://yuanyang749.github.io/model-playground/retro-gameboy/) |
+| **PELICAN BIKE · 骑自行车的鹈鹕** | `Gemini 4 Hydrogen` | 2D 双连杆逆运动学（IK）交互式 SVG 物理动画基准 | [立即体验](https://yuanyang749.github.io/model-playground/pelican-bike/) |
 
 ---
 
@@ -74,6 +75,20 @@
   4. 🧱 **俄罗斯方块 1989 (Tetris)**：经典七联方块下落、硬降/软降消除与阶段性变速机制。
 
 详见 [`retro-gameboy/README.md`](./retro-gameboy/README.md)。
+
+---
+
+## 5. PELICAN BIKE · 骑自行车的鹈鹕 (`./pelican-bike`)
+> **创建模型**：`Gemini 4 Hydrogen`（`thinkingLevel: MAX`）
+
+![PELICAN BIKE](./assets/pelican-bike.png)
+
+由 **Gemini 4 Hydrogen** 单次（One-shot）端到端直出的 `1,760` 行零依赖单文件交互式 SVG 物理运动学基准测试。
+- **三组实时 2D 双连杆逆运动学（2-Link IK）**：基于余弦定理实时解算左右双腿（髋-膝-踝）与握把翅膀（肩-肘-腕）关节角度，两只橙色脚蹼 360° 全程锁死在踏板圆周上，配备实时关节遥测悬浮窗。
+- **精细机械拓扑与空间遮挡**：完整绘制复古钻石车架、下管水壶架、前后车灯、轮毂对称反光片与运转链条，远近腿遮挡层次严丝合缝。
+- **昼夜三主题与物理互动**：支持晴朗海风、落日熔金、星夜巡航（含体积光车头灯与远方灯塔光束）切换，内置 Turbo 全力冲刺飙汗、抛物线投喂小鱼入半透明弹性喉囊及 Web Audio 合成车铃声。
+
+详见 [`pelican-bike/README.md`](./pelican-bike/README.md)。
 
 ---
 
